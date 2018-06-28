@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "packages",
   "projects": {
-    "ngx-api-utils": {
+    "ngx-api-utils-demo": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-api-utils",
+            "outputPath": "dist/ngx-api-utils-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -54,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-api-utils:build"
+            "browserTarget": "ngx-api-utils-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-api-utils:build:production"
+              "browserTarget": "ngx-api-utils-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-api-utils:build"
+            "browserTarget": "ngx-api-utils-demo:build"
           }
         },
         "test": {
@@ -99,7 +99,7 @@
         }
       }
     },
-    "ngx-api-utils-e2e": {
+    "ngx-api-utils-demo-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -107,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-api-utils:serve"
+            "devServerTarget": "ngx-api-utils-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-api-utils:serve:production"
+              "devServerTarget": "ngx-api-utils-demo:serve:production"
             }
           }
         },
@@ -127,7 +127,7 @@
       }
     }
   },
-  "defaultProject": "ngx-api-utils",
+  "defaultProject": "ngx-api-utils-demo",
   "cli": {
     "packageManager": "npm"
   }
