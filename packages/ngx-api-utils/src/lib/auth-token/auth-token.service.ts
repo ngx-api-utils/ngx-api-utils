@@ -18,22 +18,22 @@ export class AuthTokenService<T extends TokenPayload> implements OnInit, OnDestr
    * In most cases it should be sufficient to just use {@link AuthTokenService#value} in case you are not
    * interested in changes over time
    */
-  readonly value$ = new BehaviorSubject<string | null>(
+  readonly value$ = new BehaviorSubject<string | undefined>(
     this.getToken()
   );
 
   /**
    * The current raw value of the token
    */
-  get value(): string | null {
+  get value(): string | undefined {
     return this.value$.value;
   }
 
-  get payload(): null | Readonly<T> {
+  get payload(): undefined | Readonly<T> {
     return this._tokenPayload;
   }
 
-  protected _tokenPayload: null | Readonly<T> = null;
+  protected _tokenPayload: undefined | Readonly<T> = undefined;
 
   constructor(
     protected storage: TokenStorage,
@@ -55,13 +55,13 @@ export class AuthTokenService<T extends TokenPayload> implements OnInit, OnDestr
     return !!(this.payload && this.payload.isValid());
   }
 
-  protected setToken(token: string | null) {
+  protected setToken(token: string | undefined) {
     if (token) {
       this.storage.setItem(this.authTokenName, token);
       this._tokenPayload = Object.freeze(this.decoder.decode(token));
     } else {
       this.storage.removeItem(this.authTokenName);
-      this._tokenPayload = null;
+      this._tokenPayload = undefined;
     }
   }
 

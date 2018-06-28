@@ -1,5 +1,5 @@
-export interface TokenStorage {
-  getItem(key: string): string | null;
-  removeItem(key: string): void;
-  setItem(key: string, value: string): void;
+export abstract class TokenStorage {
+  abstract getItem(key: string): string | null;
+  abstract removeItem(key: string): void;
+  abstract setItem(key: string, value: string): void;
 }
