@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "ngx-api-utils"
+  "defaultProject": "ngx-api-utils",
+  "cli": {
+    "packageManager": "npm"
+  }
 }
