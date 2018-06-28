@@ -1,6 +1,13 @@
 {
-  "name": "ngx-api-utils",
-  "version": "0.0.0",
+  "name": "ngx-api-utils-source",
+  "version": "1.0.0",
+  "author": "Radoslav Kirilov <rkirilow@gmail.com> (https://github.com/smoke)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngx-api-utils/ngx-api-utils.git"
+  },
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +16,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",
@@ -45,4 +51,4 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1"
   }
-}
+  }
