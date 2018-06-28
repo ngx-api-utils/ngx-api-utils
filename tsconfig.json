@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-api-utils": [
+        "dist/ngx-api-utils"
+      ],
+      "ngx-api-utils/*": [
+        "dist/ngx-api-utils/*"
+      ]
+    }
   }
 }

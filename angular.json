@@ -125,6 +125,46 @@
           }
         }
       }
+    },
+    "ngx-api-utils": {
+      "root": "packages/ngx-api-utils",
+      "sourceRoot": "packages/ngx-api-utils/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "packages/ngx-api-utils/tsconfig.lib.json",
+            "project": "packages/ngx-api-utils/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "packages/ngx-api-utils/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/ngx-api-utils/src/test.ts",
+            "tsConfig": "packages/ngx-api-utils/tsconfig.spec.json",
+            "karmaConfig": "packages/ngx-api-utils/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/ngx-api-utils/tsconfig.lib.json",
+              "packages/ngx-api-utils/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-api-utils-demo",
