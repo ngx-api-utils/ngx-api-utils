@@ -7,46 +7,44 @@ import { TokenDecoder } from './token-decoder/token-decoder';
 
 describe('AuthTokenService', () => {
   let tokenStored: string;
-  const tokenStorage = jasmine.createSpyObj(
-    'tokenStorage',
-    [
-      'getItem',
-      'setItem',
-      'removeItem'
-    ]
-  );
-  tokenStorage.getItem.and.callFake(() => {
-    return tokenStored;
-  });
-  tokenStorage.setItem.and.callFake((__key, value) => {
-    tokenStored = value;
-  });
-  tokenStorage.removeItem.and.callFake(() => {
+  let tokenStorage: jasmine.SpyObj<TokenStorage>;
+  let tokenPayload: TokenPayload;
+  let tokenDecoder: jasmine.SpyObj<TokenDecoder<TokenPayload>>;
+  beforeEach(() => {
     tokenStored = undefined;
-  });
-  const tokenDecoder = jasmine.createSpyObj(
-    'tokenDecoder',
-    [
-      'decode'
-    ]
-  );
-  tokenDecoder.decode.and.callFake((token: string) => {
-    return {
-      amr: 'Admin',
-      iat: Date.now(),
-
-      isValid() {
-        return Date.now() < this.expires();
-      },
-
+    tokenStorage = jasmine.createSpyObj(
+      'tokenStorage',
+      [
+        'getItem',
+        'setItem',
+        'removeItem'
+      ]
+    );
+    tokenStorage.getItem.and.callFake(() => {
+      return tokenStored;
+    });
+    tokenStorage.setItem.and.callFake((__key, value) => {
+      tokenStored = value;
+    });
+    tokenStorage.removeItem.and.callFake(() => {
+      tokenStored = undefined;
+    });
+    tokenPayload = new class extends TokenPayload {
+      amr = 'Admin';
+      iat = Date.now();
       expires() {
         return new Date(Date.now() + 3600000);
       }
     };
-  });
-
-  beforeEach(() => {
-    tokenStored = undefined;
+    tokenDecoder = jasmine.createSpyObj(
+      'tokenDecoder',
+      [
+        'decode'
+      ]
+    );
+    tokenDecoder.decode.and.callFake((token: string) => {
+      return tokenPayload;
+    });
     TestBed.configureTestingModule({
       providers: [
         AuthTokenService,
@@ -134,6 +132,21 @@ describe('AuthTokenService', () => {
       expect(service.payload).toBeFalsy();
       expect(service.isValid()).toBeFalsy();
       expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenRawSequence[4]);
+    }));
+  });
+
+  describe('when a token is expired', () => {
+    beforeEach(() => {
+      spyOn(tokenPayload, 'expires').and.callFake(() => {
+        return new Date();
+      });
+      tokenStored = 'fake';
+    });
+    it('should not be valid', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+      service.ngOnInit();
+      expect(service.value).toBeTruthy();
+      expect(service.payload).toBeTruthy();
+      expect(service.isValid()).toBeFalsy();
     }));
   });
 });
