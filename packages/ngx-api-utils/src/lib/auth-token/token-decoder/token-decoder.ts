@@ -1,5 +1,7 @@
 import { TokenPayload } from '../token-payload/token-payload';
 
-export abstract class TokenDecoder<T extends TokenPayload> {
-  abstract decode(token: string): T;
+export class TokenDecoder<T extends TokenPayload = TokenPayload> {
+  decode(token: string): T {
+    return new TokenPayload() as T;
+  }
 }

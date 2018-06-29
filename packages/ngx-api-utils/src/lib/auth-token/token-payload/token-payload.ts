@@ -1,4 +1,4 @@
-export abstract class TokenPayload {
+export class TokenPayload {
   /**
    * Shows if the token is valid, e.g. it has not expired
    */
@@ -8,5 +8,5 @@ export abstract class TokenPayload {
   /**
    * Unix timestamp in microseconds
    */
-  abstract expires?(): Date | number;
+  expires?(): Date | number;
 }
