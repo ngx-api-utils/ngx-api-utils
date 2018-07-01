@@ -1,0 +1,5 @@
+@import '~src/scss/utils-for-components';
+
+.btn-outline-primary + .btn-outline-primary {
+  margin-left: $nav-divider-margin-y;
+}
