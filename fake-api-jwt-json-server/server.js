@@ -2,10 +2,11 @@ const fs = require('fs')
 const bodyParser = require('body-parser')
 const jsonServer = require('json-server')
 const jwt = require('jsonwebtoken')
+const path = require('path')
 
 const server = jsonServer.create()
-const router = jsonServer.router('./database.json')
-const userdb = JSON.parse(fs.readFileSync('./users.json', 'UTF-8'))
+const router = jsonServer.router(path.join(__dirname, './database.json'))
+const userdb = JSON.parse(fs.readFileSync(path.join(__dirname, './users.json'), 'UTF-8'))
 
 //server.use(bodyParser.urlencoded({extended: true}))
 //server.use(bodyParser.json())
@@ -15,12 +16,12 @@ const SECRET_KEY = '123456789'
 
 const expiresIn = '1h'
 
-// Create a token from a payload 
+// Create a token from a payload
 function createToken(payload){
   return jwt.sign(payload, SECRET_KEY, {expiresIn})
 }
 
-// Verify the token 
+// Verify the token
 function verifyToken(token){
   return  jwt.verify(token, SECRET_KEY, (err, decode) => decode !== undefined ?  decode : err)
 }
