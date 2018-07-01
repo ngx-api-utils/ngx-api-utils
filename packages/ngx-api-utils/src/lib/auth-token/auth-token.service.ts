@@ -8,7 +8,7 @@ import { AUTH_TOKEN_NAME } from './auth-token-name';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthTokenService<T extends TokenPayload> implements OnInit, OnDestroy {
+export class AuthTokenService<T extends TokenPayload = TokenPayload> implements OnDestroy {
 
   /**
    * RxJS BehaviorSubject that stores the token so that observers can subscribe to the subject to receive
@@ -18,9 +18,7 @@ export class AuthTokenService<T extends TokenPayload> implements OnInit, OnDestr
    * In most cases it should be sufficient to just use {@link AuthTokenService#value} in case you are not
    * interested in changes over time
    */
-  readonly value$ = new BehaviorSubject<string | undefined>(
-    this.getToken()
-  );
+  readonly value$: BehaviorSubject<string | undefined>;
 
   /**
    * The current raw value of the token
@@ -33,17 +31,16 @@ export class AuthTokenService<T extends TokenPayload> implements OnInit, OnDestr
     return this._tokenPayload;
   }
 
+  protected authTokenName = 'id_token';
   protected _tokenPayload: undefined | Readonly<T> = undefined;
 
   constructor(
     protected storage: TokenStorage,
     protected decoder: TokenDecoder<T>,
-    @Optional() @Inject(AUTH_TOKEN_NAME) protected authTokenName: string
+    @Optional() @Inject(AUTH_TOKEN_NAME) authTokenName?: string
   ) {
-    this.authTokenName = this.authTokenName || 'id_token';
-  }
-
-  ngOnInit() {
+    this.authTokenName = authTokenName || this.authTokenName;
+    this.value$ = new BehaviorSubject(this.getToken());
     this.value$.subscribe((token) => this.setToken(token));
   }
 

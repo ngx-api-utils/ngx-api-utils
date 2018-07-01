@@ -66,7 +66,6 @@ describe('AuthTokenService', () => {
 
   describe('when no token was stored', () => {
     it('should have no token', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-      service.ngOnInit();
       expect(service.value).toBeUndefined();
       expect(service.payload).toBeUndefined();
       expect(service.isValid()).toBeFalsy();
@@ -78,7 +77,6 @@ describe('AuthTokenService', () => {
       tokenStored = 'some fake token stored';
     });
     it('should have a valid token', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-      service.ngOnInit();
       expect(service.value).toBeTruthy();
       expect(service.payload).toBeTruthy();
       expect(service.isValid()).toBeTruthy();
@@ -87,7 +85,6 @@ describe('AuthTokenService', () => {
 
   describe('when a token changes in sequence', () => {
     it('should notify and store the value', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-      service.ngOnInit();
       const subscriberSpy = jasmine.createSpy('subscriberSpy');
       service.value$.subscribe((token) => subscriberSpy(token));
       const tokenRawSequence = [
@@ -143,7 +140,6 @@ describe('AuthTokenService', () => {
       tokenStored = 'fake';
     });
     it('should not be valid', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-      service.ngOnInit();
       expect(service.value).toBeTruthy();
       expect(service.payload).toBeTruthy();
       expect(service.isValid()).toBeFalsy();
