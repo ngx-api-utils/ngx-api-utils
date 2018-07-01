@@ -4,6 +4,9 @@ import { CustomerLayoutComponent } from './customer-layout/customer-layout.compo
 
 const routes: Routes = [
   {
+    path: 'auth', loadChildren: './customer-auth/customer-auth.module#CustomerAuthModule'
+  },
+  {
     path: '', component: CustomerLayoutComponent,
     children: [
       {
