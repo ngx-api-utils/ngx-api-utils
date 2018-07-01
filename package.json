@@ -11,15 +11,22 @@
   "scripts": {
     "ng": "ng",
     "start": "npm-run-all -p -l fake-api:start ngx-api-utils:start demo:start",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "demo:start": "ng serve",
+    "build": "npm-run-all -l \"ngx-api-utils:build {@}\" \"demo:build {@}\" --",
+    "test": "npm-run-all -l ngx-api-utils:test",
+    "lint": "npm-run-all -p -l ngx-api-utils:lint demo:lint",
+    "e2e": "npm-run-all -l \"ngx-api-utils:build\" -p -r fake-api:start \"demo:e2e {@}\" --",
     "fake-api:start": "node ./fake-api-jwt-json-server/server.js",
+    "demo:start": "ng serve",
+    "demo:build": "ng build",
+    "demo:lint": "ng lint",
+    "demo:e2e": "ng e2e",
     "ngx-api-utils:start": "nodemon --watch packages/ngx-api-utils -e '*' -i '*.metadata.json' -x npm-run-all -- ngx-api-utils:build",
     "ngx-api-utils:start-incremental-build": "echo \"Until https://github.com/angular/angular-cli/pull/11358 is merged this won't work so by then use 'ngx-api-utils:start'\n\"; exit; npm-run-all ngx-api-utils:build -- --watch {@} --",
-    "ngx-api-utils:build": "ng build ngx-api-utils"
+    "ngx-api-utils:build": "ng build ngx-api-utils",
+    "ngx-api-utils:test": "ng test ngx-api-utils",
+    "ngx-api-utils:lint": "ng lint ngx-api-utils",
+    "prengx-api-utils:publish": "npm-run-all ngx-api-utils:build -- --prod",
+    "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish"
   },
   "dependencies": {
     "@angular/animations": "^6.0.7",
