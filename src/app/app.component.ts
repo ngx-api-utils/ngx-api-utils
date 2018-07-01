@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthTokenService } from 'ngx-api-utils';
+import { TokenPayload } from 'packages/ngx-api-utils/src/public_api';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'ngx-api-utils';
+  constructor(
+    authToken: AuthTokenService<TokenPayload>
+  ) {
+    console.log(authToken.isValid());
+  }
+
 }

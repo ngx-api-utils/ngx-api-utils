@@ -37,3 +37,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Some artifacts of building a library using e.g. `ng build ngx-api-utils`
+/packages/*/src/*.metadata.json
