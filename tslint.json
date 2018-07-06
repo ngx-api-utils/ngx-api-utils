@@ -19,7 +19,8 @@
     "import-blacklist": [
       true,
       "rxjs/Rx",
-      "packages/*"
+      "packages/*",
+      "packages/*/public_api"
     ],
     "import-spacing": true,
     "indent": [
