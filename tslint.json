@@ -18,7 +18,9 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs/Rx"
+      "rxjs/Rx",
+      "packages/*",
+      "packages/*/public_api"
     ],
     "import-spacing": true,
     "indent": [

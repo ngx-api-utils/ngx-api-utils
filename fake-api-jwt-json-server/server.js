@@ -8,8 +8,8 @@ const server = jsonServer.create()
 const router = jsonServer.router(path.join(__dirname, './database.json'))
 const userdb = JSON.parse(fs.readFileSync(path.join(__dirname, './users.json'), 'UTF-8'))
 
-//server.use(bodyParser.urlencoded({extended: true}))
-//server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({extended: true}))
+server.use(bodyParser.json())
 server.use(jsonServer.defaults());
 
 const SECRET_KEY = '123456789'
@@ -40,7 +40,7 @@ server.post('/auth/login', (req, res) => {
     res.status(status).json({status, message})
     return
   }
-  const access_token = createToken({email, password})
+  const access_token = createToken({email, mathRandom: Math.random()})
   res.status(200).json({access_token})
 })
 
