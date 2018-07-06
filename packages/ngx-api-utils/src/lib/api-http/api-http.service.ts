@@ -13,6 +13,10 @@ export class ApiHttpService extends HttpClient {
     super(apiHttpHandler);
   }
 
+  /**
+   * @deprecated requests with no authentication headers should be re-thinked
+   * @param headers
+   */
   headersWithNoAuthorization(
     headers?: HttpHeaders | string | { [name: string]: string | string[] }
   ) {

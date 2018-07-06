@@ -8,6 +8,9 @@ import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../api-http-authorization-he
 import { API_HTTP_DEFAULT_HEADERS, ApiHttpDefaultHeadersStruct } from '../api-http-default-headers';
 import { ApiHttpErrorsService } from '../api-http-errors/api-http-errors.service';
 
+/**
+ * @deprecated This should become a flexible handler requiring interceptors from API_HTTP_INTERCEPTORS providers or so
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -46,10 +49,16 @@ export class ApiHttpHandlerService implements HttpHandler {
     req = this.setAuthorizationHeader(req);
     return this.handler.handle(req)
       .pipe(
+        /**
+         * @deprecated This should become a flexible and plugable interceptor
+         */
         catchError((err: HttpErrorResponse) => this.apiHttpErrorsService.handleError(err))
       );
   }
 
+  /**
+   * @deprecated This should become a flexible and plugable interceptor
+   */
   private setDefaultHeaders(req: HttpRequest<any>) {
     const headers = Array.from(this.defaultHeaders.keys())
       .reduce(
@@ -70,6 +79,9 @@ export class ApiHttpHandlerService implements HttpHandler {
     });
   }
 
+  /**
+   * @deprecated This should become a flexible and plugable interceptor
+   */
   private setAuthorizationHeader(req: HttpRequest<any>) {
     if (!req.headers.has(this.apiHttpAuthorizationHeaderName)) {
       // if header is set use the default token

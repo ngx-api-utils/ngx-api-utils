@@ -3,7 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-@Injectable({
+/**
+ * @deprecated This should become a flexible and plugable interceptor
+ */
+  @Injectable({
   providedIn: 'root'
 })
 export class ApiHttpErrorsService implements OnDestroy {
