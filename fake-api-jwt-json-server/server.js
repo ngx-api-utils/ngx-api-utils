@@ -40,7 +40,7 @@ server.post('/auth/login', (req, res) => {
     res.status(status).json({status, message})
     return
   }
-  const access_token = createToken({email, password})
+  const access_token = createToken({email, mathRandom: Math.random()})
   res.status(200).json({access_token})
 })
 

@@ -19,7 +19,7 @@ export class CustomerDashboardPageComponent implements OnInit {
     of('Get the products, login if needed an auth token')
       .pipe(
         switchMap(() => {
-          if (this.authToken.isValid) {
+          if (this.authToken.isValid()) {
             console.log('We have valid token, so use it');
             return of (this.authToken.payload);
           } else {
@@ -28,7 +28,7 @@ export class CustomerDashboardPageComponent implements OnInit {
               email: 'bruno@email.com',
               password: 'bruno'
             };
-            this.apiHttp
+            return this.apiHttp
               .post<{access_token: string}>('/auth/login', userCredentials)
               .pipe(
                 map(({access_token}) => {
