@@ -63,7 +63,7 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
   }
 
   protected getToken() {
-    return this.storage.getItem(this.authTokenName);
+    return this.storage.getItem(this.authTokenName) || undefined;
   }
 }
 
