@@ -1,11 +1,21 @@
 import { TestBed, inject } from '@angular/core/testing';
-
+import { HttpClientModule, HttpHandler } from '@angular/common/http';
 import { ApiHttpService } from './api-http.service';
+import { ApiHttpHandlerService } from './api-http-handler/api-http-handler.service';
 
 describe('ApiHttpService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ApiHttpService]
+      imports: [
+        HttpClientModule
+      ],
+      providers: [
+        ApiHttpService,
+        {
+          provide: ApiHttpHandlerService,
+          useClass: HttpHandler
+        }
+      ]
     });
   });
 

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { NgxApiUtilsModule, AuthTokenService, ApiHttpService } from 'ngx-api-utils';
 import { Polly } from '@pollyjs/core';
 
-fdescribe('ngx-api-utils', () => {
+describe('ngx-api-utils', () => {
   const apiUtilsConfig = {
     baseUrl: 'http://example.com/api'
   };
