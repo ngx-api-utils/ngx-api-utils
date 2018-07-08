@@ -1,5 +1,10 @@
 import { TokenPayload } from 'ngx-api-utils';
 
+/**
+ * @see https://www.iana.org/assignments/jwt/jwt.xhtml
+ * @see https://tools.ietf.org/html/rfc7519
+ * @see https://jwt.io/
+ */
 export class JwtTokenPayload extends TokenPayload {
   email: string;
   mathRandom: number;
@@ -9,23 +14,5 @@ export class JwtTokenPayload extends TokenPayload {
   constructor(rawPayload: Partial<JwtTokenPayload>) {
     super();
     Object.assign(this, rawPayload);
-  }
-
-  isValid(): boolean {
-    return !this.isExpired();
-  }
-
-  expires(): Date {
-    const expirationDate = new Date(0);
-    expirationDate.setUTCSeconds(this.exp);
-    return expirationDate;
-  }
-
-  isExpired(): boolean {
-    const expirationDate = this.expires();
-    if (!expirationDate) {
-      return false;
-    }
-    return !(expirationDate.valueOf() > (new Date().valueOf()));
   }
 }
