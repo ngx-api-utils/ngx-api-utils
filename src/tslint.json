@@ -12,6 +12,12 @@
             "element",
             "app",
             "kebab-case"
+        ],
+        "import-blacklist": [
+          true,
+          "rxjs/Rx",
+          "ngx-api-utils/public_api",
+          "packages/ngx-api-utils/src/public_api"
         ]
     }
 }

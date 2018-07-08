@@ -12,6 +12,12 @@
             "element",
             "lib",
             "kebab-case"
+        ],
+        "import-blacklist": [
+          true,
+          "rxjs/Rx",
+          "ngx-api-utils",
+          "ngx-api-utils/public_api"
         ]
     }
 }
