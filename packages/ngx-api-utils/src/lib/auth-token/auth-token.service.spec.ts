@@ -32,8 +32,8 @@ describe('AuthTokenService', () => {
     tokenPayload = new class extends TokenPayload {
       amr = 'Admin';
       iat = Date.now();
-      expires() {
-        return new Date(Date.now() + 3600000);
+      get expires() {
+        return Date.now() + 3600000;
       }
     };
     tokenDecoder = jasmine.createSpyObj(
@@ -134,8 +134,8 @@ describe('AuthTokenService', () => {
 
   describe('when a token is expired', () => {
     beforeEach(() => {
-      spyOn(tokenPayload, 'expires').and.callFake(() => {
-        return new Date();
+      spyOnProperty(tokenPayload, 'expires').and.callFake(() => {
+        return Date.now();
       });
       tokenStored = 'fake';
     });
