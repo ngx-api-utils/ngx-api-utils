@@ -9,6 +9,7 @@ import {
   API_HTTP_INTERCEPTORS,
   ApiBaseUrlInterceptor
 } from './api-http/public_api';
+import { ApiDefaultHeadersInterceptor } from './api-http/interceptors/api-default-headers/api-default-headers.interceptor';
 
 @NgModule({
   imports: [
@@ -60,6 +61,9 @@ export class NgxApiUtilsModule {
         },
         {
           provide: API_HTTP_INTERCEPTORS, useClass: ApiBaseUrlInterceptor, multi: true
+        },
+        {
+          provide: API_HTTP_INTERCEPTORS, useClass: ApiDefaultHeadersInterceptor, multi: true
         }
       ]
     };

@@ -16,7 +16,6 @@ import { HttpInterceptorHandler, API_HTTP_INTERCEPTORS, API_HTTP_INTERCEPTORS_IN
 })
 export class ApiHttpHandlerService implements HttpHandler {
 
-  private defaultHeaders: HttpHeaders;
   private chain: HttpHandler|null = null;
 
   constructor(
@@ -27,12 +26,8 @@ export class ApiHttpHandlerService implements HttpHandler {
     private authTokenService: AuthTokenService,
     private apiHttpErrorsService: ApiHttpErrorsService,
     @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) private apiHttpAuthorizationHeaderName: string,
-    @Optional() @Inject(API_HTTP_DEFAULT_HEADERS) apiHttpDefaultHeaders?: ApiHttpDefaultHeadersStruct
+
   ) {
-    if (!(apiHttpDefaultHeaders instanceof HttpHeaders)) {
-      apiHttpDefaultHeaders = new HttpHeaders(apiHttpDefaultHeaders);
-    }
-    this.defaultHeaders = apiHttpDefaultHeaders;
   }
 
   headersWithNoAuthorization(
@@ -43,7 +38,6 @@ export class ApiHttpHandlerService implements HttpHandler {
   }
 
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    req = this.setDefaultHeaders(req);
     req = this.setAuthorizationHeader(req);
     if (this.chain === null) {
       const interceptors = this.injector.get(this.apiHttpInterceptorsInjectionToken, []);
@@ -57,29 +51,6 @@ export class ApiHttpHandlerService implements HttpHandler {
          */
         catchError((err: HttpErrorResponse) => this.apiHttpErrorsService.handleError(err))
       );
-  }
-
-  /**
-   * @deprecated This should become a flexible and plugable interceptor
-   */
-  private setDefaultHeaders(req: HttpRequest<any>) {
-    const headers = Array.from(this.defaultHeaders.keys())
-      .reduce(
-        (prevHeaders, headerName) => {
-          // override only if not defined already
-          if (!prevHeaders.has(headerName)) {
-            prevHeaders = prevHeaders.set(
-              headerName,
-              this.defaultHeaders.get(headerName)
-            );
-          }
-          return prevHeaders;
-        },
-        req.headers
-      );
-    return req.clone({
-      headers
-    });
   }
 
   /**
