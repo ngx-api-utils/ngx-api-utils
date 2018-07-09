@@ -10,7 +10,8 @@ describe('ngx-api-utils package', () => {
     defaultHeaders: {
       'accept': 'application/json, */*',
       'X-Client': 'Ngx Api Utils Client'
-    }
+    },
+    authorizationHeaderName: 'Authorization'
   };
   let polly: any;
 
@@ -176,6 +177,24 @@ describe('ngx-api-utils package', () => {
           headerName = headerName.toLowerCase();
           expect(normalizedReceivedHeaders[headerName]).toEqual(headerValue);
         });
+      })();
+    });
+
+    it('should add the authentication token as header', async () => {
+      return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
+        const fakeTokenValue = 'fake token value';
+        authTokenService.value$.next(fakeTokenValue);
+        const {server} = polly;
+        const endpoint = '/products';
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          res.sendStatus(404);
+        });
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+          res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
+        });
+        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
+        expect(success).toBeTruthy('response should be success');
+        expect(authToken).toEqual(`Bearer ${fakeTokenValue}`);
       })();
     });
   });
