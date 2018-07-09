@@ -3,7 +3,6 @@ import { HttpHandler, HttpHeaders, HttpErrorResponse, HttpRequest, HttpEvent, Ht
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthTokenService } from '../../auth-token/public_api';
-import { API_HTTP_BASE_URL } from '../api-http-base-url';
 import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../api-http-authorization-header-name';
 import { API_HTTP_DEFAULT_HEADERS, ApiHttpDefaultHeadersStruct } from '../api-http-default-headers';
 import { ApiHttpErrorsService } from '../api-http-errors/api-http-errors.service';
@@ -23,21 +22,17 @@ export class ApiHttpHandlerService implements HttpHandler {
   constructor(
     private backend: HttpHandler,
     private injector: Injector,
+    @Inject(API_HTTP_INTERCEPTORS_INJECTION_TOKEN)
+    private apiHttpInterceptorsInjectionToken: InjectionToken<HttpInterceptor[]>,
     private authTokenService: AuthTokenService,
     private apiHttpErrorsService: ApiHttpErrorsService,
-    @Inject(API_HTTP_BASE_URL) private apiHttpBaseUrl: string,
     @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) private apiHttpAuthorizationHeaderName: string,
-    @Optional() @Inject(API_HTTP_DEFAULT_HEADERS) apiHttpDefaultHeaders?: ApiHttpDefaultHeadersStruct,
-    @Optional() @Inject(API_HTTP_INTERCEPTORS_INJECTION_TOKEN)
-    private apiHttpInterceptorsInjectionToken?: InjectionToken<HttpInterceptor[]>
+    @Optional() @Inject(API_HTTP_DEFAULT_HEADERS) apiHttpDefaultHeaders?: ApiHttpDefaultHeadersStruct
   ) {
     if (!(apiHttpDefaultHeaders instanceof HttpHeaders)) {
       apiHttpDefaultHeaders = new HttpHeaders(apiHttpDefaultHeaders);
     }
     this.defaultHeaders = apiHttpDefaultHeaders;
-    // trim the last / e.g. `//localhost:3000/api/` -> `//localhost:3000/api`
-    this.apiHttpBaseUrl = apiHttpBaseUrl.replace(/\/+$/, '');
-    this.apiHttpInterceptorsInjectionToken = this.apiHttpInterceptorsInjectionToken || API_HTTP_INTERCEPTORS_INJECTION_TOKEN;
   }
 
   headersWithNoAuthorization(
@@ -48,9 +43,6 @@ export class ApiHttpHandlerService implements HttpHandler {
   }
 
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    req = req.clone({
-      url: `${this.apiHttpBaseUrl}${req.url}`
-    });
     req = this.setDefaultHeaders(req);
     req = this.setAuthorizationHeader(req);
     if (this.chain === null) {
