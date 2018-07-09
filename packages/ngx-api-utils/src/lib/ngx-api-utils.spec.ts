@@ -6,7 +6,11 @@ import { TokenDecoder } from './auth-token/public_api';
 describe('ngx-api-utils package', () => {
   const apiUtilsConfig = {
     baseUrl: 'http://example.com/api',
-    authTokenName: 'id_token'
+    authTokenName: 'id_token',
+    defaultHeaders: {
+      'accept': 'application/json, */*',
+      'X-Client': 'Ngx Api Utils Client'
+    }
   };
   let polly: any;
 
@@ -135,6 +139,7 @@ describe('ngx-api-utils package', () => {
     it('should be provided', inject([ApiHttpService], (service: ApiHttpService) => {
       expect(service).toBeTruthy();
     }));
+
     it('should prefix the requests with the `baseUrl` configured', async () => {
       return inject([ApiHttpService], async (service: ApiHttpService) => {
         const {server} = polly;
@@ -145,8 +150,32 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
           res.status(200).json({success: true});
         });
-        const success = (await service.get<{success: boolean}>(endpoint).toPromise()).success;
+        const {success} = (await service.get<{success: boolean}>(endpoint).toPromise());
         expect(success).toBeTruthy('response should be success');
+      })();
+    });
+
+    it('should add default configured headers to the requests', async () => {
+      return inject([ApiHttpService], async (service: ApiHttpService) => {
+        const {server} = polly;
+        const endpoint = '/products';
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          res.sendStatus(404);
+        });
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+          res.status(200).json({success: true, receivedHeaders: req.headers});
+        });
+        const {success, receivedHeaders} = (await service.get<{success: boolean, receivedHeaders: Object}>(endpoint).toPromise());
+        expect(success).toBeTruthy('response should be success');
+        const normalizedReceivedHeaders = Object.keys(receivedHeaders).reduce((prev, headerName) => {
+          prev[headerName.toLowerCase()] = receivedHeaders[headerName];
+          return prev;
+        }, {});
+        Object.keys(apiUtilsConfig.defaultHeaders).forEach((headerName) => {
+          const headerValue = apiUtilsConfig.defaultHeaders[headerName];
+          headerName = headerName.toLowerCase();
+          expect(normalizedReceivedHeaders[headerName]).toEqual(headerValue);
+        });
       })();
     });
   });
