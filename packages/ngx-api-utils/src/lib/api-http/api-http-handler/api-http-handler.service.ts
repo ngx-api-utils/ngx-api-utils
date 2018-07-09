@@ -2,9 +2,6 @@ import { Injectable, Inject, Optional, Injector, InjectionToken } from '@angular
 import { HttpHandler, HttpHeaders, HttpErrorResponse, HttpRequest, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthTokenService } from '../../auth-token/public_api';
-import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../api-http-authorization-header-name';
-import { API_HTTP_DEFAULT_HEADERS, ApiHttpDefaultHeadersStruct } from '../api-http-default-headers';
 import { ApiHttpErrorsService } from '../api-http-errors/api-http-errors.service';
 import { HttpInterceptorHandler, API_HTTP_INTERCEPTORS, API_HTTP_INTERCEPTORS_INJECTION_TOKEN } from '../interceptors';
 
@@ -23,22 +20,11 @@ export class ApiHttpHandlerService implements HttpHandler {
     private injector: Injector,
     @Inject(API_HTTP_INTERCEPTORS_INJECTION_TOKEN)
     private apiHttpInterceptorsInjectionToken: InjectionToken<HttpInterceptor[]>,
-    private authTokenService: AuthTokenService,
-    private apiHttpErrorsService: ApiHttpErrorsService,
-    @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) private apiHttpAuthorizationHeaderName: string,
-
+    private apiHttpErrorsService: ApiHttpErrorsService
   ) {
-  }
-
-  headersWithNoAuthorization(
-    headers?: HttpHeaders | string | { [name: string]: string | string[] }
-  ) {
-    headers = headers instanceof HttpHeaders ? headers : new HttpHeaders(headers);
-    return headers.set(this.apiHttpAuthorizationHeaderName, 'none');
   }
 
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    req = this.setAuthorizationHeader(req);
     if (this.chain === null) {
       const interceptors = this.injector.get(this.apiHttpInterceptorsInjectionToken, []);
       this.chain = interceptors.reduceRight(
@@ -51,29 +37,5 @@ export class ApiHttpHandlerService implements HttpHandler {
          */
         catchError((err: HttpErrorResponse) => this.apiHttpErrorsService.handleError(err))
       );
-  }
-
-  /**
-   * @deprecated This should become a flexible and plugable interceptor
-   */
-  private setAuthorizationHeader(req: HttpRequest<any>) {
-    if (!req.headers.has(this.apiHttpAuthorizationHeaderName)) {
-      // if header is set use the default token
-      if (!this.authTokenService.isValid) {
-        throw new Error('No JWT present or has expired');
-      }
-      return req.clone({
-        headers: req.headers.set(
-          this.apiHttpAuthorizationHeaderName,
-          `Bearer ${this.authTokenService.value}`
-        )
-      });
-    } else if (req.headers.get(this.apiHttpAuthorizationHeaderName) === 'none') {
-      // if header is set and is given token, ensure the header is deleted
-      return req.clone({
-        headers: req.headers.delete(this.apiHttpAuthorizationHeaderName)
-      });
-    }
-    return req;
   }
 }

@@ -134,11 +134,15 @@ describe('ngx-api-utils package', () => {
   });
 
   describe('ApiHttpService', () => {
+    const fakeTokenValue = 'fake token value';
+
     it('should be provided', inject([ApiHttpService], (service: ApiHttpService) => {
       expect(service).toBeTruthy();
     }));
 
     it('should prefix the requests with the `baseUrl` configured', async () => {
+      // ensure a token
+      localStorage.setItem(apiUtilsConfig.authTokenName, fakeTokenValue);
       return inject([ApiHttpService], async (service: ApiHttpService) => {
         const {server} = polly;
         const endpoint = '/products';
@@ -154,6 +158,8 @@ describe('ngx-api-utils package', () => {
     });
 
     it('should add default configured headers to the requests', async () => {
+      // ensure a token
+      localStorage.setItem(apiUtilsConfig.authTokenName, fakeTokenValue);
       return inject([ApiHttpService], async (service: ApiHttpService) => {
         const {server} = polly;
         const endpoint = '/products';
@@ -179,7 +185,6 @@ describe('ngx-api-utils package', () => {
 
     it('should add the authentication token as header', async () => {
       return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
-        const fakeTokenValue = 'fake token value';
         authTokenService.value$.next(fakeTokenValue);
         const {server} = polly;
         const endpoint = '/products';
@@ -192,6 +197,47 @@ describe('ngx-api-utils package', () => {
         const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
         expect(success).toBeTruthy('response should be success');
         expect(authToken).toEqual(`Bearer ${fakeTokenValue}`);
+      })();
+    });
+
+    it('should leave preset authorization token header in the request as is', async () => {
+      return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
+        const presetFakeTokenValue = 'preset fake token value';
+        authTokenService.value$.next(fakeTokenValue);
+        const {server} = polly;
+        const endpoint = '/products';
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          res.sendStatus(404);
+        });
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+          res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
+        });
+        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
+          endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}}
+        ).toPromise());
+        expect(success).toBeTruthy('response should be success');
+        expect(authToken).toEqual(`Bearer ${presetFakeTokenValue}`);
+      })();
+    });
+
+    it('should throw in case the token is not valid any more', async () => {
+      return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
+        authTokenService.value$.next(undefined);
+        const {server} = polly;
+        const endpoint = '/products';
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          res.sendStatus(404);
+        });
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+          res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
+        });
+        let caught = false;
+        try {
+          (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
+        } catch {
+          caught = true;
+        }
+        expect(caught).toEqual(true)
       })();
     });
   });

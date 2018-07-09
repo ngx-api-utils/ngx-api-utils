@@ -7,9 +7,10 @@ import {
   API_HTTP_AUTHORIZATION_HEADER_NAME,
   API_HTTP_INTERCEPTORS_INJECTION_TOKEN,
   API_HTTP_INTERCEPTORS,
-  ApiBaseUrlInterceptor
+  ApiBaseUrlInterceptor,
+  ApiDefaultHeadersInterceptor,
+  ApiAuthorizationHeaderInterceptor
 } from './api-http/public_api';
-import { ApiDefaultHeadersInterceptor } from './api-http/interceptors/api-default-headers/api-default-headers.interceptor';
 
 @NgModule({
   imports: [
@@ -64,6 +65,9 @@ export class NgxApiUtilsModule {
         },
         {
           provide: API_HTTP_INTERCEPTORS, useClass: ApiDefaultHeadersInterceptor, multi: true
+        },
+        {
+          provide: API_HTTP_INTERCEPTORS, useClass: ApiAuthorizationHeaderInterceptor, multi: true
         }
       ]
     };
