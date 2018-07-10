@@ -203,6 +203,30 @@ describe('ngx-api-utils package', () => {
       })();
     });
 
+    it('should allow requests without authentication token as header', async () => {
+      return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
+        authTokenService.value$.next(fakeTokenValue);
+        const {server} = polly;
+        const endpoint = '/products';
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          res.sendStatus(404);
+        });
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+          res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
+        });
+        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
+          endpoint,
+          {
+            headers: {
+              [apiUtilsConfig.authorizationHeaderName]: ''
+            }
+          }
+        ).toPromise());
+        expect(success).toBeTruthy('response should be success');
+        expect(authToken).toBeUndefined();
+      })();
+    });
+
     it('should leave preset authorization token header in the request as is', async () => {
       return inject([ApiHttpService, AuthTokenService], async (service: ApiHttpService, authTokenService: AuthTokenService) => {
         const presetFakeTokenValue = 'preset fake token value';
@@ -244,7 +268,7 @@ describe('ngx-api-utils package', () => {
       })();
     });
 
-    fit('should intercept errors in case the errors interceptor is used at all', async () => {
+    it('should intercept errors in case the errors interceptor is used at all', async () => {
       TestBed.configureTestingModule({
         providers: [
           ApiErrorsInterceptor,
