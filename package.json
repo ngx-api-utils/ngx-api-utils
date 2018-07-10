@@ -27,7 +27,13 @@
     "ngx-api-utils:test": "ng test ngx-api-utils",
     "ngx-api-utils:lint": "ng lint ngx-api-utils",
     "prengx-api-utils:publish": "npm-run-all ngx-api-utils:build -- --prod",
-    "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish"
+    "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish",
+    "ci:hooks:pre-push": "npm-run-all lint \"test -- --watch false\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm-run-all ci:hooks:pre-push"
+    }
   },
   "dependencies": {
     "@angular/animations": "^6.0.7",
@@ -57,6 +63,7 @@
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.4.2",
+    "husky": "^1.0.0-rc.13",
     "jasmine-core": "~3.1.0",
     "jasmine-spec-reporter": "~4.2.1",
     "json-server": "^0.14.0",
