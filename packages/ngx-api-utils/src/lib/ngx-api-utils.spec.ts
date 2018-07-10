@@ -2,6 +2,9 @@ import { TestBed, inject } from '@angular/core/testing';
 import { NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload } from '../public_api';
 import { Polly } from '@pollyjs/core';
 import { TokenDecoder } from './auth-token/public_api';
+import { ApiErrorsInterceptor } from './api-http/interceptors/api-errors/api-errors.interceptor';
+import { API_HTTP_INTERCEPTORS } from './api-http/public_api';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('ngx-api-utils package', () => {
   const apiUtilsConfig = {
@@ -237,8 +240,40 @@ describe('ngx-api-utils package', () => {
         } catch {
           caught = true;
         }
-        expect(caught).toEqual(true)
+        expect(caught).toEqual(true);
       })();
+    });
+
+    fit('should intercept errors in case the errors interceptor is used at all', async () => {
+      TestBed.configureTestingModule({
+        providers: [
+          ApiErrorsInterceptor,
+          {
+            provide: API_HTTP_INTERCEPTORS, useExisting: ApiErrorsInterceptor, multi: true
+          }
+        ]
+      });
+      return inject(
+        [ApiHttpService, AuthTokenService, ApiErrorsInterceptor],
+        async (service: ApiHttpService, authTokenService: AuthTokenService, apiErrors: ApiErrorsInterceptor) => {
+          const presetFakeTokenValue = 'preset fake token value';
+          authTokenService.value$.next(fakeTokenValue);
+          const {server} = polly;
+          const endpoint = '/products';
+          server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+            res.sendStatus(404);
+          });
+          try {
+            const {success} = (await service.get<{success: boolean}>(
+              endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}}
+            ).toPromise());
+          } catch {
+            // noop
+          }
+          expect(apiErrors.lastApiError instanceof HttpErrorResponse).toBeTruthy();
+          expect(apiErrors.lastApiError.status).toEqual(404);
+        }
+      )();
     });
   });
 });
