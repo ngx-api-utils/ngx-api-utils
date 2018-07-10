@@ -264,7 +264,7 @@ describe('ngx-api-utils package', () => {
         } catch {
           caught = true;
         }
-        expect(caught).toEqual(true);
+        expect(caught).toEqual(true, 'error was thrown when a request was performed');
       })();
     });
 
@@ -287,13 +287,15 @@ describe('ngx-api-utils package', () => {
           server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
             res.sendStatus(404);
           });
+          let caught = false;
           try {
-            const {success} = (await service.get<{success: boolean}>(
+            (await service.get<{success: boolean}>(
               endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}}
             ).toPromise());
           } catch {
-            // noop
+            caught = true;
           }
+          expect(caught).toEqual(true, 'error was thrown when a request was performed');
           expect(apiErrors.lastApiError instanceof HttpErrorResponse).toBeTruthy();
           expect(apiErrors.lastApiError.status).toEqual(404);
         }

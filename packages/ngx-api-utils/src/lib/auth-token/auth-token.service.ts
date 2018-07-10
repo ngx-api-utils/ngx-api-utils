@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy, Optional, Inject } from '@angular/core';
+import { Injectable, OnDestroy, Optional, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TokenPayload } from './token-payload/token-payload';
 import { TokenStorage } from './token-storage/token-storage';

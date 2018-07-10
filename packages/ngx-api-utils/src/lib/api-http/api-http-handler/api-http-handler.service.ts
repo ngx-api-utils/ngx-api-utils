@@ -1,5 +1,5 @@
-import { Injectable, Inject, Optional, Injector, InjectionToken } from '@angular/core';
-import { HttpHandler, HttpHeaders, HttpErrorResponse, HttpRequest, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Injectable, Inject, Injector, InjectionToken } from '@angular/core';
+import { HttpHandler, HttpRequest, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpInterceptorHandler, API_HTTP_INTERCEPTORS_INJECTION_TOKEN } from '../interceptors';
 
