@@ -11,10 +11,10 @@
   "scripts": {
     "ng": "ng",
     "start": "npm-run-all -p -l fake-api:start ngx-api-utils:start demo:start",
-    "build": "npm-run-all -l \"ngx-api-utils:build {@}\" \"demo:build {@}\" --",
-    "test": "npm-run-all -l ngx-api-utils:test",
+    "build": "npm-run-all -l \"ngx-api-utils:build -- {@}\" \"demo:build -- {@}\" --",
+    "test": "npm-run-all -l \"ngx-api-utils:test -- {@}\" --",
     "lint": "npm-run-all -p -l ngx-api-utils:lint demo:lint",
-    "e2e": "npm-run-all -l \"ngx-api-utils:build\" -p -r fake-api:start \"demo:e2e {@}\" --",
+    "e2e": "npm-run-all -l \"ngx-api-utils:build\" -p -r fake-api:start \"demo:e2e -- {@}\" --",
     "fake-api:start": "nodemon --watch fake-api-jwt-json-server -e '*' -x npm-run-all -- fake-api:start:server",
     "fake-api:start:server": "node fake-api-jwt-json-server/server.js",
     "demo:start": "ng serve",
