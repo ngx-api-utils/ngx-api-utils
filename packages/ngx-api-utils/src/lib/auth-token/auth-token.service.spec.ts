@@ -4,6 +4,7 @@ import { AuthTokenService } from './auth-token.service';
 import { TokenPayload } from './token-payload/token-payload';
 import { TokenStorage } from './token-storage/token-storage';
 import { TokenDecoder } from './token-decoder/token-decoder';
+import { AUTH_TOKEN_AUTO_REMOVE } from './auth-token-auto-remove';
 
 describe('AuthTokenService', () => {
   let tokenStored: string;
@@ -55,6 +56,10 @@ describe('AuthTokenService', () => {
         {
           provide: TokenDecoder,
           useValue: tokenDecoder
+        },
+        {
+          provide: AUTH_TOKEN_AUTO_REMOVE,
+          useValue: false
         }
       ]
     });
@@ -144,5 +149,38 @@ describe('AuthTokenService', () => {
       expect(service.payload).toBeTruthy();
       expect(service.isValid()).toBeFalsy();
     }));
+    it('should be auto removed if configured so', () => {
+      TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
+      return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+        expect(service.value).toBeFalsy();
+        expect(service.payload).toBeUndefined();
+        expect(service.isValid()).toBeFalsy();
+      })();
+    });
+  });
+
+  describe('when a token is not valid', () => {
+    beforeEach(() => {
+      spyOnProperty(tokenPayload, 'expires').and.callFake(() => {
+        return Date.now() + 3600000;
+      });
+      spyOn(tokenPayload, 'isValid').and.callFake(() => {
+        return false;
+      });
+      tokenStored = 'fake';
+    });
+    it('should not be valid', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+      expect(service.value).toBeTruthy();
+      expect(service.payload).toBeTruthy();
+      expect(service.isValid()).toBeFalsy();
+    }));
+    it('should be auto removed if configured so', () => {
+      TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
+      return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+        expect(service.value).toBeFalsy();
+        expect(service.payload).toBeUndefined();
+        expect(service.isValid()).toBeFalsy();
+      })();
+    });
   });
 });
