@@ -48,20 +48,31 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
     this.value$ = new BehaviorSubject(this.getToken());
     this.value$.subscribe((token) => this.setToken(token));
     if (this.autoRemove) {
-      this.autoRemoveTokenSubscription = this.removeTokenWhenNotValidOrExpires();
+      this.activateTokenAutoRemove();
     }
   }
 
   ngOnDestroy() {
     this.value$.unsubscribe();
-    if (this.autoRemoveTokenSubscription) {
-      this.autoRemoveTokenSubscription.unsubscribe();
-      this.autoRemoveTokenSubscription = undefined;
-    }
+    this.deactivateTokenAutoRemove();
   }
 
   isValid(): boolean {
     return !!(this.payload && this.payload.isValid());
+  }
+
+  activateTokenAutoRemove() {
+    this.deactivateTokenAutoRemove();
+    this.autoRemove = true;
+    this.autoRemoveTokenSubscription = this.removeTokenWhenNotValidOrExpires();
+  }
+
+  deactivateTokenAutoRemove() {
+    this.autoRemove = false;
+    if (this.autoRemoveTokenSubscription) {
+      this.autoRemoveTokenSubscription.unsubscribe();
+      this.autoRemoveTokenSubscription = undefined;
+    }
   }
 
   protected setToken(token: string | undefined) {
