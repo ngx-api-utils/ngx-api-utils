@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { HttpHeaders, HttpClientModule, HttpInterceptor } from '@angular/common/http';
-import { AUTH_TOKEN_NAME } from './auth-token/public_api';
+import { AUTH_TOKEN_NAME, AUTH_TOKEN_AUTO_REMOVE } from './auth-token/public_api';
 import {
   API_HTTP_BASE_URL,
   API_HTTP_DEFAULT_HEADERS,
@@ -24,6 +24,7 @@ export class NgxApiUtilsModule {
     config?: {
       baseUrl?: string,
       authTokenName?: string,
+      authTokenAutoRemove?: boolean,
       defaultHeaders?: HttpHeaders | string | { [name: string]: string | string[]; },
       authorizationHeaderName?: string,
       interceptorsInjectionToken?: InjectionToken<InjectionToken<HttpInterceptor[]>>
@@ -43,6 +44,10 @@ export class NgxApiUtilsModule {
         {
           provide: AUTH_TOKEN_NAME,
           useValue: config.authTokenName
+        },
+        {
+          provide: AUTH_TOKEN_AUTO_REMOVE,
+          useValue: config.authTokenAutoRemove
         },
         {
           provide: API_HTTP_BASE_URL,
