@@ -32,7 +32,7 @@ describe('ngx-api-utils package', () => {
     await polly.stop();
   });
 
-  describe('AuthTokenService', () => {
+  describe('an AuthTokenService', () => {
     const fakeTokenValue = 'fake token value';
 
     beforeEach(() => {
@@ -136,7 +136,7 @@ describe('ngx-api-utils package', () => {
     });
   });
 
-  describe('ApiHttpService', () => {
+  describe('an ApiHttpService', () => {
     const fakeTokenValue = 'fake token value';
 
     it('should be provided', inject([ApiHttpService], (service: ApiHttpService) => {
@@ -301,5 +301,9 @@ describe('ngx-api-utils package', () => {
         }
       )();
     });
+  });
+
+  xdescribe('an ApiAuthGuard', () => {
+    // TODO: Complete these integration tests
   });
 });
