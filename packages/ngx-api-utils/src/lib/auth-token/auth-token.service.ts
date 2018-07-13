@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy, Optional, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, never, Subscription } from 'rxjs';
-import { switchMap, delay, race, filter, map } from 'rxjs/operators';
+import { switchMap, delay, filter, map } from 'rxjs/operators';
 import { TokenPayload } from './token-payload/token-payload';
 import { TokenStorage } from './token-storage/token-storage';
 import { TokenDecoder } from './token-decoder/token-decoder';
@@ -63,16 +63,16 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
 
   activateTokenAutoRemove() {
     this.deactivateTokenAutoRemove();
-    this.autoRemove = true;
     this.autoRemoveTokenSubscription = this.removeTokenWhenNotValidOrExpires();
+    this.autoRemove = true;
   }
 
   deactivateTokenAutoRemove() {
-    this.autoRemove = false;
     if (this.autoRemoveTokenSubscription) {
       this.autoRemoveTokenSubscription.unsubscribe();
       this.autoRemoveTokenSubscription = undefined;
     }
+    this.autoRemove = false;
   }
 
   protected setToken(token: string | undefined) {
@@ -93,30 +93,24 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
     return this.value$
       .pipe(
         filter(token => !!token),
-        race(
-          of().pipe(
-            switchMap(() => this.whenTokenExpires()),
+        switchMap(() => {
+          const isValid = this.isValid();
+          if (!isValid) {
+            return of({
+              reason: '_token_not_valid_',
+              isValid
+            });
+          }
+          return of(this.payload).pipe(
+            switchMap((payload) => this.whenTokenExpires(payload)),
             map((expires) => {
               return {
                 reason: '_token_expired_',
                 expires
               };
             })
-          ),
-          of(this.payload).pipe(
-            map(payload => payload.isValid()),
-            map(isValid => {
-              if (!isValid) {
-                return {
-                  reason: '_token_not_valid_',
-                  isValid
-                };
-              } else {
-                return never();
-              }
-            })
-          )
-        )
+          );
+        })
       )
       .subscribe(() => this.value$.next(undefined));
   }
@@ -127,7 +121,9 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
         switchMap(({expires}) => {
           if (expires) {
             // the token has an expiration date, so check and use it
-            return of(expires).pipe(delay(expires < Date.now() ? expires : 0));
+            const expiresAfter = expires - Date.now();
+            const delayTo = expiresAfter > 0 ? new Date(expires) : 0;
+            return of(expires).pipe(delay(delayTo));
           } else {
             // the token never expires
             return never();
