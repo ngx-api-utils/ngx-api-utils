@@ -14,7 +14,11 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     AppRoutingModule,
     NgxApiUtilsModule.forRoot({
-      baseUrl: '//localhost:3000'
+      baseUrl: '//localhost:3000',
+      authTokenAutoRemove: true,
+      authGuardPublicOnlyRoutes: /^\/(customer\/auth)([\/#?].*)?$/,
+      authGuardUrlForAuthenticated: '/customer/',
+      authGuardUrlForAuthentication: '/customer/auth/sign-in'
     }),
     CoreModule.forRoot()
   ],

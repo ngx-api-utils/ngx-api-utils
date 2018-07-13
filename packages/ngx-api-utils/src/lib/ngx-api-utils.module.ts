@@ -11,6 +11,11 @@ import {
   ApiDefaultHeadersInterceptor,
   ApiAuthorizationHeaderInterceptor
 } from './api-http/public_api';
+import {
+  API_AUTH_GUARD_PUBLIC_ONLY_ROUTES,
+  API_AUTH_GUARD_URL_FOR_AUTHENTICATED,
+  API_AUTH_GUARD_URL_FOR_AUTHENTICATION
+} from './api-auth-guard/public_api';
 
 @NgModule({
   imports: [
@@ -27,7 +32,10 @@ export class NgxApiUtilsModule {
       authTokenAutoRemove?: boolean,
       defaultHeaders?: HttpHeaders | string | { [name: string]: string | string[]; },
       authorizationHeaderName?: string,
-      interceptorsInjectionToken?: InjectionToken<InjectionToken<HttpInterceptor[]>>
+      interceptorsInjectionToken?: InjectionToken<InjectionToken<HttpInterceptor[]>>,
+      authGuardPublicOnlyRoutes?: RegExp,
+      authGuardUrlForAuthenticated?: string,
+      authGuardUrlForAuthentication?: string
     }
   ): ModuleWithProviders {
     config = {
@@ -35,7 +43,10 @@ export class NgxApiUtilsModule {
       defaultHeaders: {
         'accept': 'application/json, */*'
       },
+      authTokenName: 'id_token',
       authorizationHeaderName: 'Authorization',
+      authGuardUrlForAuthenticated: '/',
+      authGuardUrlForAuthentication: '/login',
       ...config,
     };
     return {
@@ -73,6 +84,15 @@ export class NgxApiUtilsModule {
         },
         {
           provide: API_HTTP_INTERCEPTORS, useClass: ApiAuthorizationHeaderInterceptor, multi: true
+        },
+        {
+          provide: API_AUTH_GUARD_PUBLIC_ONLY_ROUTES, useValue: config.authGuardPublicOnlyRoutes
+        },
+        {
+          provide: API_AUTH_GUARD_URL_FOR_AUTHENTICATED, useValue: config.authGuardUrlForAuthenticated
+        },
+        {
+          provide: API_AUTH_GUARD_URL_FOR_AUTHENTICATION, useValue: config.authGuardUrlForAuthentication
         }
       ]
     };

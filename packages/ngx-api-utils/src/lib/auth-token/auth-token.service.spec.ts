@@ -1,4 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
+// TODO: Make sure to remove `rxjs-compat` when this https://github.com/angular/zone.js/issues/1091 is resolved
+import 'zone.js/dist/zone-patch-rxjs-fake-async';
 
 import { AuthTokenService } from './auth-token.service';
 import { TokenPayload } from './token-payload/token-payload';
@@ -157,6 +159,32 @@ describe('AuthTokenService', () => {
         expect(service.isValid()).toBeFalsy();
       })();
     });
+  });
+
+  describe('when a token expires after time', () => {
+    let expiresAt: number;
+    const expiresAfter = 3600000;
+    beforeEach(() => {
+      expiresAt = Date.now() + expiresAfter;
+      spyOnProperty(tokenPayload, 'expires').and.callFake(() => {
+        return expiresAt;
+      });
+      tokenStored = 'fake';
+    });
+    it('should be valid initially', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+      expect(service.value).toBeTruthy();
+      expect(service.payload).toBeTruthy();
+      expect(service.isValid()).toBeTruthy();
+    }));
+    it('should be auto removed if configured so', fakeAsync(() => {
+      TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
+      return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+        tick(expiresAfter + 1);
+        expect(service.value).toBeFalsy();
+        expect(service.payload).toBeUndefined();
+        expect(service.isValid()).toBeFalsy();
+      })();
+    }));
   });
 
   describe('when a token is not valid', () => {
