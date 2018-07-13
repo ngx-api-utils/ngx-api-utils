@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, Optional, Inject } from '@angular/core';
-import { BehaviorSubject, Observable, of, never, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription, NEVER } from 'rxjs';
 import { switchMap, delay, filter, map } from 'rxjs/operators';
 import { TokenPayload } from './token-payload/token-payload';
 import { TokenStorage } from './token-storage/token-storage';
@@ -126,7 +126,7 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
             return of(expires).pipe(delay(delayTo));
           } else {
             // the token never expires
-            return never();
+            return NEVER;
           }
         })
       );
