@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthTokenService } from '../../../auth-token/public_api';
 import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../../api-http-authorization-header-name';
@@ -15,6 +15,21 @@ export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = this.reqWithAuthorizationHeader(req);
     return next.handle(req);
+  }
+
+  /**
+   * @experimental the headersWithNoAuthorization support is experimental
+   * it might be considered in future this capability to be extracted
+   * in an abstract class `ApiNoAuthorizationHeaderInterceptor`
+   * then we can have `ApiAuthorizationHeaderInterceptor` implement the interface
+   * and provide it using forwardRef or similar.
+   * Yet this seems too complex for this stage.
+   */
+  headersWithNoAuthorization(
+    headers?: HttpHeaders | string | {[name: string]: string | string[]}
+  ): HttpHeaders {
+    headers = headers instanceof HttpHeaders ? headers : new HttpHeaders(headers);
+    return headers.set(this.apiHttpAuthorizationHeaderName, '');
   }
 
   private reqWithAuthorizationHeader(req: HttpRequest<any>) {

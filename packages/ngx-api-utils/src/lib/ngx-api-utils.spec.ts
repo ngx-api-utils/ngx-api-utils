@@ -217,9 +217,7 @@ describe('ngx-api-utils package', () => {
         const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
           endpoint,
           {
-            headers: {
-              [apiUtilsConfig.authorizationHeaderName]: ''
-            }
+            headers: service.headersWithNoAuthorization()
           }
         ).toPromise());
         expect(success).toBeTruthy('response should be success');
