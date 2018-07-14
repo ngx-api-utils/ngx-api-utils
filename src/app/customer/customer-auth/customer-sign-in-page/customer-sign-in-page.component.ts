@@ -26,7 +26,13 @@ export class CustomerSignInPageComponent {
     console.log('authentication attempt');
     const {email, password} = this.form.value;
     this.apiHttp
-      .post<{access_token: string}>('/auth/login', {email, password}, {headers: {authorization: ''}})
+      .post<{access_token: string}>(
+        '/auth/login',
+        {email, password},
+        {
+          headers: this.apiHttp.headersWithNoAuthorization()
+        }
+      )
       .subscribe(({access_token}) => {
         console.log('authentication success');
         this.authToken.value$.next(access_token);

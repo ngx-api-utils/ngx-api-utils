@@ -1,20 +1,22 @@
 import { Injectable, Inject, Injector, InjectionToken } from '@angular/core';
-import { HttpHandler, HttpRequest, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpHandler, HttpRequest, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpInterceptorHandler, API_HTTP_INTERCEPTORS_INJECTION_TOKEN } from '../interceptors';
+import { ApiAuthorizationHeaderInterceptor } from '../interceptors/api-authorization-header/api-authorization-header.interceptor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiHttpHandlerService implements HttpHandler {
 
-  private chain: HttpHandler|null = null;
+  protected chain: HttpHandler|null = null;
+  protected apiAuthorizationInterceptor: ApiAuthorizationHeaderInterceptor|null = null;
 
   constructor(
-    private backend: HttpHandler,
-    private injector: Injector,
+    protected backend: HttpHandler,
+    protected injector: Injector,
     @Inject(API_HTTP_INTERCEPTORS_INJECTION_TOKEN)
-    private apiHttpInterceptorsInjectionToken: InjectionToken<HttpInterceptor[]>
+    protected apiHttpInterceptorsInjectionToken: InjectionToken<HttpInterceptor[]>
   ) {
   }
 
@@ -25,5 +27,21 @@ export class ApiHttpHandlerService implements HttpHandler {
           (next, interceptor) => new HttpInterceptorHandler(next, interceptor), this.backend);
     }
     return this.chain.handle(req);
+  }
+
+  /**
+   * @experimental the headersWithNoAuthorization support is experimental
+   * see {@link ApiAuthorizationHeaderInterceptor#headersWithNoAuthorization} for details
+   */
+  headersWithNoAuthorization(
+    headers?: HttpHeaders | string | {[name: string]: string | string[]}
+  ): HttpHeaders {
+    if (this.apiAuthorizationInterceptor === null) {
+      this.apiAuthorizationInterceptor =
+        this.injector
+        .get(this.apiHttpInterceptorsInjectionToken, [])
+        .find((interceptor) => interceptor instanceof ApiAuthorizationHeaderInterceptor) as ApiAuthorizationHeaderInterceptor;
+    }
+    return this.apiAuthorizationInterceptor.headersWithNoAuthorization(headers);
   }
 }

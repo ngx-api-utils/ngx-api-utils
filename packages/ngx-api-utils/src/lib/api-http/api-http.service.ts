@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiHttpHandlerService } from './api-http-handler/api-http-handler.service';
 
 @Injectable({
@@ -7,8 +7,18 @@ import { ApiHttpHandlerService } from './api-http-handler/api-http-handler.servi
 })
 export class ApiHttpService extends HttpClient {
   constructor(
-    apiHttpHandler: ApiHttpHandlerService
+    protected apiHttpHandler: ApiHttpHandlerService
   ) {
     super(apiHttpHandler);
+  }
+
+  /**
+   * @experimental the headersWithNoAuthorization support is experimental
+   * see {@link ApiAuthorizationHeaderInterceptor#headersWithNoAuthorization} for details
+   */
+  headersWithNoAuthorization(
+    headers?: HttpHeaders | string | {[name: string]: string | string[]}
+  ): HttpHeaders {
+    return this.apiHttpHandler.headersWithNoAuthorization(headers);
   }
 }
