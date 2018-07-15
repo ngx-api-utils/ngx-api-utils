@@ -7,6 +7,20 @@
     "type": "git",
     "url": "https://github.com/ngx-api-utils/ngx-api-utils.git"
   },
+  "keywords": [
+    "ngx-api-utils",
+    "angular",
+    "http-api",
+    "rest",
+    "rest-api",
+    "authentication",
+    "jwt",
+    "oauth2",
+    "jwt-token",
+    "oauth-token",
+    "angular-service",
+    "npm-package"
+  ],
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
