@@ -1,6 +1,6 @@
 {
   "name": "ngx-api-utils-source",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Radoslav Kirilov <rkirilow@gmail.com> (https://github.com/smoke)",
   "license": "MIT",
   "repository": {
@@ -26,9 +26,10 @@
     "ngx-api-utils:build": "ng build ngx-api-utils",
     "ngx-api-utils:test": "ng test ngx-api-utils",
     "ngx-api-utils:lint": "ng lint ngx-api-utils",
-    "prengx-api-utils:publish": "npm-run-all ngx-api-utils:build -- --prod",
-    "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish",
-    "ci:hooks:pre-push": "npm-run-all lint \"test -- --watch false\""
+    "ngx-api-utils:docs": "cp README.md dist/ngx-api-utils",
+    "ngx-api-utils:publish": "np --contents dist/ngx-api-utils",
+    "ngx-api-utils:release": "npm-run-all -l ngx-api-utils:lint \"ngx-api-utils:test-- --watch false\" ngx-api-utils:build ngx-api-utils:docs ngx-api-utils:publish",
+    "ci:hooks:pre-push": "npm-run-all lint"
   },
   "husky": {
     "hooks": {
@@ -75,6 +76,7 @@
     "karma-jasmine-html-reporter": "^1.2.0",
     "ng-packagr": "^3.0.0-rc.2",
     "nodemon": "^1.17.5",
+    "np": "^3.0.4",
     "npm-run-all": "^4.1.3",
     "protractor": "~5.3.0",
     "rxjs-compat": "^6.2.1",

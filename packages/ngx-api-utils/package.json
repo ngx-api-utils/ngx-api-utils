@@ -1,6 +1,6 @@
 {
   "name": "ngx-api-utils",
-  "version": "0.9.x",
+  "version": "0.0.0",
   "author": "Radoslav Kirilov <rkirilow@gmail.com> (https://github.com/smoke)",
   "license": "MIT",
   "repository": {
@@ -9,6 +9,8 @@
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/router": "^6.0.0-rc.0 || ^6.0.0",
+    "rxjs": "^6.0.0-rc.0 || ^6.0.0"
   }
 }
