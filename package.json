@@ -1,13 +1,17 @@
 {
   "name": "ngx-api-utils-source",
   "version": "0.0.0",
+  "private": true,
   "author": "Radoslav Kirilov <rkirilow@gmail.com> (https://github.com/smoke)",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngx-api-utils/ngx-api-utils.git"
   },
-  "private": true,
+  "engines": {
+    "node": ">=8.11.0",
+    "npm": ">=6.2.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "npm-run-all -p -l fake-api:start ngx-api-utils:start demo:start",
