@@ -27,9 +27,10 @@
     "ngx-api-utils:test": "ng test ngx-api-utils",
     "ngx-api-utils:lint": "ng lint ngx-api-utils",
     "ngx-api-utils:docs": "cp README.md dist/ngx-api-utils",
+    "ngx-api-utils:version": "cd packages/ngx-api-utils && npm version",
     "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish",
-    "ngx-api-utils:git-tag": "npm-run-all \"git -- tag {1}\" \"git -- push --no-verify origin {1}\" --",
-    "ngx-api-utils:release": "npm-run-all ngx-api-utils:lint \"ngx-api-utils:test -- --watch false\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {2} {3}\" \"ngx-api-utils:git-tag -- {1}\" --",
+    "ngx-api-utils:git-tag": "npm-run-all \"git -- commit -a -m 'release(ngx-api-utils): {1}'\" \"git -- tag {1}\" \"git -- push --no-verify origin {1}\" --",
+    "ngx-api-utils:release": "npm-run-all ngx-api-utils:lint \"ngx-api-utils:test -- --watch false\" \"ngx-api-utils:version -- {1}\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {2} {3}\" \"ngx-api-utils:git-tag -- {1}\" --",
     "ci:hooks:pre-push": "npm-run-all lint",
     "git": "git"
   },
