@@ -28,7 +28,7 @@
     "ngx-api-utils:lint": "ng lint ngx-api-utils",
     "ngx-api-utils:docs": "cp README.md dist/ngx-api-utils",
     "ngx-api-utils:publish": "np --no-cleanup --no-yarn --yolo --contents dist/ngx-api-utils",
-    "ngx-api-utils:release": "npm-run-all -l ngx-api-utils:lint \"ngx-api-utils:test-- --watch false\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {@}\" --",
+    "ngx-api-utils:release": "npm-run-all -l ngx-api-utils:lint \"ngx-api-utils:test -- --watch false\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {@}\" --",
     "ci:hooks:pre-push": "npm-run-all lint"
   },
   "husky": {
