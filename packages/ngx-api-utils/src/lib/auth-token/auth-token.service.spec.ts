@@ -26,7 +26,7 @@ describe('AuthTokenService', () => {
     tokenStorage.getItem.and.callFake(() => {
       return tokenStored;
     });
-    tokenStorage.setItem.and.callFake((__key, value) => {
+    tokenStorage.setItem.and.callFake((__key: any, value: any) => {
       tokenStored = value;
     });
     tokenStorage.removeItem.and.callFake(() => {
@@ -142,7 +142,7 @@ describe('AuthTokenService', () => {
   describe('when a token is expired', () => {
     beforeEach(() => {
       spyOnProperty(tokenPayload, 'expires').and.callFake(() => {
-        return Date.now();
+        return Date.now() - 1;
       });
       tokenStored = 'fake';
     });

@@ -88,7 +88,7 @@ describe('ngx-api-utils package', () => {
       }
 
       class FakeTokenDecoder extends TokenDecoder {
-        decode(token) {
+        decode(token: string) {
           return new FakeTokenPayload(token);
         }
       }
@@ -149,10 +149,10 @@ describe('ngx-api-utils package', () => {
       return inject([ApiHttpService], async (service: ApiHttpService) => {
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true});
         });
         const {success} = (await service.get<{success: boolean}>(endpoint).toPromise());
@@ -166,22 +166,22 @@ describe('ngx-api-utils package', () => {
       return inject([ApiHttpService], async (service: ApiHttpService) => {
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, receivedHeaders: req.headers});
         });
-        const {success, receivedHeaders} = (await service.get<{success: boolean, receivedHeaders: Object}>(endpoint).toPromise());
+        const {success, receivedHeaders} = (await service.get<{success: boolean, receivedHeaders: object}>(endpoint).toPromise());
         expect(success).toBeTruthy('response should be success');
         const normalizedReceivedHeaders = Object.keys(receivedHeaders).reduce((prev, headerName) => {
-          prev[headerName.toLowerCase()] = receivedHeaders[headerName];
+          (prev as any)[headerName.toLowerCase()] = (receivedHeaders as any)[headerName];
           return prev;
         }, {});
         Object.keys(apiUtilsConfig.defaultHeaders).forEach((headerName) => {
-          const headerValue = apiUtilsConfig.defaultHeaders[headerName];
+          const headerValue = (apiUtilsConfig.defaultHeaders as any)[headerName];
           headerName = headerName.toLowerCase();
-          expect(normalizedReceivedHeaders[headerName]).toEqual(headerValue);
+          expect((normalizedReceivedHeaders as any)[headerName]).toEqual(headerValue);
         });
       })();
     });
@@ -191,10 +191,10 @@ describe('ngx-api-utils package', () => {
         authTokenService.value$.next(fakeTokenValue);
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
         const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
@@ -208,10 +208,10 @@ describe('ngx-api-utils package', () => {
         authTokenService.value$.next(fakeTokenValue);
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
         const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
@@ -231,10 +231,10 @@ describe('ngx-api-utils package', () => {
         authTokenService.value$.next(fakeTokenValue);
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
         const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
@@ -250,10 +250,10 @@ describe('ngx-api-utils package', () => {
         authTokenService.value$.next(undefined);
         const {server} = polly;
         const endpoint = '/products';
-        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
           res.sendStatus(404);
         });
-        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req, res) => {
+        server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
         let caught = false;
@@ -282,7 +282,7 @@ describe('ngx-api-utils package', () => {
           authTokenService.value$.next(fakeTokenValue);
           const {server} = polly;
           const endpoint = '/products';
-          server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req, res) => {
+          server.get(`${apiUtilsConfig.baseUrl}/*`).intercept((req: any, res: any) => {
             res.sendStatus(404);
           });
           let caught = false;
