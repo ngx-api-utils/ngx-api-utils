@@ -3,12 +3,14 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } fro
 import { Observable } from 'rxjs';
 import { AuthTokenService } from '../../../auth-token/public_api';
 import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../../api-http-authorization-header-name';
+import { API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX } from '../../api-http-authorization-header-token-type-prefix';
 
 @Injectable()
 export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
 
   constructor(
     @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) private apiHttpAuthorizationHeaderName: string,
+    @Inject(API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX) private apiHttpAuthorizationHeaderTokenTypePrefix: string,
     private authTokenService: AuthTokenService
   ) {}
 
@@ -41,7 +43,7 @@ export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
       req = req.clone({
         headers: req.headers.set(
           this.apiHttpAuthorizationHeaderName,
-          `Bearer ${this.authTokenService.value}`
+          `${this.apiHttpAuthorizationHeaderTokenTypePrefix}${this.authTokenService.value}`
         )
       });
     } else if (!req.headers.get(this.apiHttpAuthorizationHeaderName)) {

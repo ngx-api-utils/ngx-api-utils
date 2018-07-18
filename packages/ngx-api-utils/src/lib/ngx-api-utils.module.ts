@@ -5,6 +5,7 @@ import {
   API_HTTP_BASE_URL,
   API_HTTP_DEFAULT_HEADERS,
   API_HTTP_AUTHORIZATION_HEADER_NAME,
+  API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX,
   API_HTTP_INTERCEPTORS_INJECTION_TOKEN,
   API_HTTP_INTERCEPTORS,
   ApiBaseUrlInterceptor,
@@ -32,6 +33,7 @@ export class NgxApiUtilsModule {
       authTokenAutoRemove?: boolean,
       defaultHeaders?: HttpHeaders | string | { [name: string]: string | string[]; },
       authorizationHeaderName?: string,
+      authorizationHeaderTokenTypePrefix?: string,
       interceptorsInjectionToken?: InjectionToken<InjectionToken<HttpInterceptor[]>>,
       authGuardPublicOnlyRoutes?: RegExp,
       authGuardUrlForAuthenticated?: string,
@@ -45,6 +47,7 @@ export class NgxApiUtilsModule {
       },
       authTokenName: 'id_token',
       authorizationHeaderName: 'Authorization',
+      authorizationHeaderTokenTypePrefix: 'Bearer ',
       authGuardUrlForAuthenticated: '/',
       authGuardUrlForAuthentication: '/login',
       ...config,
@@ -71,6 +74,10 @@ export class NgxApiUtilsModule {
         {
           provide: API_HTTP_AUTHORIZATION_HEADER_NAME,
           useValue: config.authorizationHeaderName
+        },
+        {
+          provide: API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX,
+          useValue: config.authorizationHeaderTokenTypePrefix
         },
         {
           provide: API_HTTP_INTERCEPTORS_INJECTION_TOKEN,

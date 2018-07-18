@@ -7,6 +7,7 @@ export { ApiDefaultHeadersInterceptor } from './interceptors/api-default-headers
 export { ApiAuthorizationHeaderInterceptor } from './interceptors/api-authorization-header/api-authorization-header.interceptor';
 export { ApiHttpHandlerService } from './api-http-handler/api-http-handler.service';
 export { API_HTTP_AUTHORIZATION_HEADER_NAME } from './api-http-authorization-header-name';
+export { API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX } from './api-http-authorization-header-token-type-prefix';
 export { API_HTTP_BASE_URL } from './api-http-base-url';
 export { API_HTTP_DEFAULT_HEADERS } from './api-http-default-headers';
 export { ApiHttpService } from './api-http.service';
