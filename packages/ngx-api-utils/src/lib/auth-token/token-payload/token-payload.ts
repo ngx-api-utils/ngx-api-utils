@@ -10,6 +10,6 @@ export class TokenPayload {
    */
   get expires(): number | undefined {
     // by default check the JWT exp property @see https://tools.ietf.org/html/rfc7519#section-4.1.4
-    return this['exp'] && this['exp'] * 1000;
+    return (this as any)['exp'] && (this as any)['exp'] * 1000;
   }
 }

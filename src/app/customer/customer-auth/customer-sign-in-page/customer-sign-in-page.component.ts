@@ -30,7 +30,7 @@ export class CustomerSignInPageComponent {
         '/auth/login',
         {email, password},
         {
-          headers: this.apiHttp.headersWithNoAuthorization()
+          // headers: this.apiHttp.headersWithNoAuthorization()
         }
       )
       .subscribe(({access_token}) => {

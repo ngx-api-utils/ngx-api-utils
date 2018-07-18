@@ -36,7 +36,7 @@ export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
     if (!req.headers.has(this.apiHttpAuthorizationHeaderName)) {
       // if header is set use the default token
       if (!this.authTokenService.isValid()) {
-        throw new Error('No AuthToken present or has expired');
+        throw new Error(`No valid AuthToken present when requesting: '${req.method} ${req.url}'`);
       }
       req = req.clone({
         headers: req.headers.set(
