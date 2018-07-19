@@ -3,9 +3,11 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpHeaders, HttpInterceptor } fro
 import { Observable } from 'rxjs';
 import { ApiHttpDefaultHeadersStruct, API_HTTP_DEFAULT_HEADERS } from '../../api-http-default-headers';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiDefaultHeadersInterceptor implements HttpInterceptor {
-  private defaultHeaders: HttpHeaders;
+  defaultHeaders: HttpHeaders;
 
   constructor(
     @Optional() @Inject(API_HTTP_DEFAULT_HEADERS) apiHttpDefaultHeaders?: ApiHttpDefaultHeadersStruct

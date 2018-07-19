@@ -28,7 +28,7 @@ import { NgxApiUtilsModule } from 'ngx-api-utils';
 
 @NgModule({
   ...
-  imports: [NgxApiUtilsModule.forRoot(),...]
+  imports: [NgxApiUtilsModule,...]
   ...
 })
 export class AppModule { }
@@ -50,7 +50,7 @@ The package consists of couple of main services and a module that you would use:
   - or even better - have your own implementation of any interceptor you need - to handle errors, transform results or anything you would the same way you would do for Angular's `HttpClient`, just provide it like the defaults are provided with `API_HTTP_INTERCEPTORS` injection token e.g. `{provide: API_HTTP_INTERCEPTORS, useClass: YourCoolInterceptor, multi: true}` to line up with the rest of the default provided [`API_HTTP_INTERCEPTORS`](https://github.com/ngx-api-utils/ngx-api-utils/blob/master/packages/ngx-api-utils/src/lib/ngx-api-utils.module.ts#API_HTTP_INTERCEPTORS)
 - [`ApiAuthGuardService`](https://github.com/ngx-api-utils/ngx-api-utils/blob/master/packages/ngx-api-utils/src/lib/api-auth-guard/api-auth-guard.service.ts) that is a perfectly sane option of you just have public and private part that needs to be protected based on `AuthTokenService` validity and you want a bit more
   - you can of course configure it with urls for `API_AUTH_GUARD_URL_FOR_AUTHENTICATED` and `API_AUTH_GUARD_URL_FOR_AUTHENTICATION`, also a RegExp for `API_AUTH_GUARD_PUBLIC_ONLY_ROUTES`
-- [`NgxApiUtilsModule`](https://github.com/ngx-api-utils/ngx-api-utils/blob/master/packages/ngx-api-utils/src/lib/ngx-api-utils.module.ts) that allows you to easy and handy way to configure the sane defaults services listed above through using `NgxApiUtilsModule#forRoot` method and just passing couple of options
+- [`NgxApiUtilsModule`](https://github.com/ngx-api-utils/ngx-api-utils/blob/master/packages/ngx-api-utils/src/lib/ngx-api-utils.module.ts) that provides a default set of interceptors for `API_HTTP_INTERCEPTORS` used by the `ApiHttpService` which you can configure through providing your own values for the relevant injection tokens
 
 For more details, please check:
 

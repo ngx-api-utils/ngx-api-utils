@@ -5,12 +5,14 @@ import { AuthTokenService } from '../../../auth-token/public_api';
 import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../../api-http-authorization-header-name';
 import { API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX } from '../../api-http-authorization-header-token-type-prefix';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
 
   constructor(
-    @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) private apiHttpAuthorizationHeaderName: string,
-    @Inject(API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX) private apiHttpAuthorizationHeaderTokenTypePrefix: string,
+    @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) public apiHttpAuthorizationHeaderName: string,
+    @Inject(API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX) public apiHttpAuthorizationHeaderTokenTypePrefix: string,
     private authTokenService: AuthTokenService
   ) {}
 

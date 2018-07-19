@@ -1,9 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload } from '../public_api';
 import { Polly } from '@pollyjs/core';
-import { TokenDecoder } from './auth-token/public_api';
+import { TokenDecoder, AUTH_TOKEN_NAME } from './auth-token/public_api';
 import { ApiErrorsInterceptor } from './api-http/interceptors/api-errors/api-errors.interceptor';
-import { API_HTTP_INTERCEPTORS } from './api-http/public_api';
+import {
+  API_HTTP_INTERCEPTORS,
+  API_HTTP_BASE_URL,
+  API_HTTP_DEFAULT_HEADERS,
+  API_HTTP_AUTHORIZATION_HEADER_NAME
+} from './api-http/public_api';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('ngx-api-utils package', () => {
@@ -21,7 +26,25 @@ describe('ngx-api-utils package', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgxApiUtilsModule.forRoot(apiUtilsConfig)
+        NgxApiUtilsModule
+      ],
+      providers: [
+        {
+          provide: API_HTTP_BASE_URL,
+          useValue: apiUtilsConfig.baseUrl
+        },
+        {
+          provide: AUTH_TOKEN_NAME,
+          useValue: apiUtilsConfig.authTokenName
+        },
+        {
+          provide: API_HTTP_DEFAULT_HEADERS,
+          useValue: apiUtilsConfig.defaultHeaders
+        },
+        {
+          provide: API_HTTP_AUTHORIZATION_HEADER_NAME,
+          useValue: apiUtilsConfig.authorizationHeaderName
+        }
       ]
     });
     polly = new Polly('ngx-api-utils');

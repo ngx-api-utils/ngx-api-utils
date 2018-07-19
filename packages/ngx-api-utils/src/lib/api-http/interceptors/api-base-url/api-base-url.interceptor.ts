@@ -3,10 +3,12 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable } from 'rxjs';
 import { API_HTTP_BASE_URL } from '../../api-http-base-url';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiBaseUrlInterceptor implements HttpInterceptor {
   constructor(
-    @Inject(API_HTTP_BASE_URL) private apiHttpBaseUrl: string
+    @Inject(API_HTTP_BASE_URL) public apiHttpBaseUrl: string
   ) {
     // trim the last / e.g. `//localhost:3000/api/` -> `//localhost:3000/api`
     this.apiHttpBaseUrl = apiHttpBaseUrl.replace(/\/+$/, '');
