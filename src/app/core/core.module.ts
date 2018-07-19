@@ -15,7 +15,8 @@ export const publicOnlyRoutesRegexp = /^\/(customer\/auth)([\/#?].*)?$/;
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NgxApiUtilsModule
   ],
   declarations: []
 })
@@ -30,7 +31,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        NgxApiUtilsModule,
         {
           provide: API_HTTP_BASE_URL,
           useValue: '//localhost:3000'
