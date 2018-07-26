@@ -1,6 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload } from '../public_api';
 import { Polly } from '@pollyjs/core';
+import * as XHRAdapter from '@pollyjs/adapter-xhr';
+import * as FetchAdapter from '@pollyjs/adapter-fetch';
 import { TokenDecoder, AUTH_TOKEN_NAME } from './auth-token/public_api';
 import { ApiErrorsInterceptor } from './api-http/interceptors/api-errors/api-errors.interceptor';
 import {
@@ -10,6 +12,13 @@ import {
   API_HTTP_AUTHORIZATION_HEADER_NAME
 } from './api-http/public_api';
 import { HttpErrorResponse } from '@angular/common/http';
+
+/*
+  Register the adapters and persisters we want to use. This way all future
+  polly instances can access them by name.
+*/
+Polly.register(XHRAdapter);
+Polly.register(FetchAdapter);
 
 describe('ngx-api-utils package', () => {
   const apiUtilsConfig = {
@@ -47,7 +56,9 @@ describe('ngx-api-utils package', () => {
         }
       ]
     });
-    polly = new Polly('ngx-api-utils');
+    polly = new Polly('ngx-api-utils', {
+      adapters: ['xhr', 'fetch']
+    });
     localStorage.removeItem(apiUtilsConfig.authTokenName);
   });
 
