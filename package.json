@@ -35,11 +35,15 @@
     "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish",
     "ngx-api-utils:git-tag": "npm-run-all \"git -- commit -a -m 'release(ngx-api-utils): {1}'\" \"git -- tag {1}\" \"git -- push --no-verify origin {1}\" --",
     "ngx-api-utils:release": "npm-run-all ngx-api-utils:lint \"ngx-api-utils:test -- --watch false\" \"ngx-api-utils:version -- {1}\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {2} {3}\" \"ngx-api-utils:git-tag -- {1}\" --",
+    "format:fix": "pretty-quick",
+    "format:fix-staged": "pretty-quick --staged",
+    "ci:hooks:pre-commit": "npm-run-all format:fix-staged",
     "ci:hooks:pre-push": "npm-run-all lint",
     "git": "git"
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm-run-all ci:hooks:pre-commit",
       "pre-push": "npm-run-all ci:hooks:pre-push"
     }
   },
@@ -86,6 +90,8 @@
     "ng-packagr": "^4.0.0",
     "nodemon": "^1.18.3",
     "npm-run-all": "^4.1.3",
+    "prettier": "^1.13.7",
+    "pretty-quick": "^1.6.0",
     "protractor": "~5.4.0",
     "rxjs-compat": "^6.2.1",
     "ts-node": "~7.0.0",
