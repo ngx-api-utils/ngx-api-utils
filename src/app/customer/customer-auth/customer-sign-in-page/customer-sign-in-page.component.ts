@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ApiHttpService, AuthTokenService } from 'ngx-api-utils';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ApiHttpService, AuthTokenService} from 'ngx-api-utils';
 
 @Component({
   selector: 'app-customer-sign-in-page',
@@ -8,16 +8,11 @@ import { ApiHttpService, AuthTokenService } from 'ngx-api-utils';
   styleUrls: ['./customer-sign-in-page.component.scss']
 })
 export class CustomerSignInPageComponent {
-
   form = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
   });
-  constructor(
-    private fb: FormBuilder,
-    private apiHttp: ApiHttpService,
-    private authToken: AuthTokenService
-  ) { }
+  constructor(private fb: FormBuilder, private apiHttp: ApiHttpService, private authToken: AuthTokenService) {}
 
   onSubmit() {
     if (!this.form.valid) {
@@ -38,5 +33,4 @@ export class CustomerSignInPageComponent {
         this.authToken.value$.next(access_token);
       });
   }
-
 }

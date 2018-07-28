@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiHttpService, AuthTokenService } from 'ngx-api-utils';
-import { map, tap, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ApiHttpService, AuthTokenService} from 'ngx-api-utils';
+import {map, tap, switchMap} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-customer-dashboard-page',
@@ -9,11 +9,7 @@ import { of } from 'rxjs';
   styleUrls: ['./customer-dashboard-page.component.scss']
 })
 export class CustomerDashboardPageComponent implements OnInit {
-
-  constructor(
-    private apiHttp: ApiHttpService,
-    private authToken: AuthTokenService
-  ) { }
+  constructor(private apiHttp: ApiHttpService, private authToken: AuthTokenService) {}
 
   ngOnInit() {
     of('Get the products, login if needed an auth token')
@@ -21,21 +17,19 @@ export class CustomerDashboardPageComponent implements OnInit {
         switchMap(() => {
           if (this.authToken.isValid()) {
             console.log('We have valid token, so use it');
-            return of (this.authToken.payload);
+            return of(this.authToken.payload);
           } else {
-            console.log('We don\'t have valid token, so login');
+            console.log("We don't have valid token, so login");
             const userCredentials = {
               email: 'bruno@email.com',
               password: 'bruno'
             };
-            return this.apiHttp
-              .post<{access_token: string}>('/auth/login', userCredentials)
-              .pipe(
-                map(({access_token}) => {
-                  this.authToken.value$.next(access_token);
-                  return this.authToken.payload;
-                })
-              );
+            return this.apiHttp.post<{access_token: string}>('/auth/login', userCredentials).pipe(
+              map(({access_token}) => {
+                this.authToken.value$.next(access_token);
+                return this.authToken.payload;
+              })
+            );
           }
         }),
         tap(payload => console.log({payload})),
@@ -43,5 +37,4 @@ export class CustomerDashboardPageComponent implements OnInit {
       )
       .subscribe(console.log);
   }
-
 }

@@ -1,7 +1,7 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { TokenDecoder } from './token-decoder';
-import { TokenPayload } from '../token-payload/token-payload';
+import {TokenDecoder} from './token-decoder';
+import {TokenPayload} from '../token-payload/token-payload';
 
 describe('TokenDecoder', () => {
   beforeEach(() => {

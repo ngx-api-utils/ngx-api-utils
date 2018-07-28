@@ -1,4 +1,4 @@
-import { AdminAuthModule } from './admin-auth.module';
+import {AdminAuthModule} from './admin-auth.module';
 
 describe('AdminAuthModule', () => {
   let adminAuthModule: AdminAuthModule;

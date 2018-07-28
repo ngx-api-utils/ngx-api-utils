@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AdminDashboardPageComponent } from './admin-dashboard-page/admin-dashboard-page.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {AdminDashboardPageComponent} from './admin-dashboard-page/admin-dashboard-page.component';
 
 const routes: Routes = [
   {
-    path: '', component: AdminDashboardPageComponent
+    path: '',
+    component: AdminDashboardPageComponent
   }
 ];
 
@@ -12,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminDashboardRoutingModule { }
+export class AdminDashboardRoutingModule {}

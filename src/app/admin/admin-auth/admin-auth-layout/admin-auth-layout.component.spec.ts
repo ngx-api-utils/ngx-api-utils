@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminAuthLayoutComponent } from './admin-auth-layout.component';
+import {AdminAuthLayoutComponent} from './admin-auth-layout.component';
 
 describe('AdminAuthLayoutComponent', () => {
   let component: AdminAuthLayoutComponent;
@@ -8,9 +8,8 @@ describe('AdminAuthLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminAuthLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminAuthLayoutComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

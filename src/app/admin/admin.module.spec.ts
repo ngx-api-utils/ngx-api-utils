@@ -1,4 +1,4 @@
-import { AdminModule } from './admin.module';
+import {AdminModule} from './admin.module';
 
 describe('AdminModule', () => {
   let adminModule: AdminModule;

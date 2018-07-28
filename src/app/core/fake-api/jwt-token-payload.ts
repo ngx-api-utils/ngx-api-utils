@@ -1,4 +1,4 @@
-import { TokenPayload } from 'ngx-api-utils';
+import {TokenPayload} from 'ngx-api-utils';
 
 /**
  * @see https://www.iana.org/assignments/jwt/jwt.xhtml

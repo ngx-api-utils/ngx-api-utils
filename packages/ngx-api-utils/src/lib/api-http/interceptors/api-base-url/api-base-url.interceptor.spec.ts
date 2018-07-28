@@ -1,7 +1,7 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { ApiBaseUrlInterceptor } from './api-base-url.interceptor';
-import { API_HTTP_BASE_URL } from '../../api-http-base-url';
+import {ApiBaseUrlInterceptor} from './api-base-url.interceptor';
+import {API_HTTP_BASE_URL} from '../../api-http-base-url';
 
 describe('ApiBaseUrlInterceptor', () => {
   beforeEach(() => {

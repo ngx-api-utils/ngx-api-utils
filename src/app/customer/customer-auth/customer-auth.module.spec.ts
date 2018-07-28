@@ -1,4 +1,4 @@
-import { CustomerAuthModule } from './customer-auth.module';
+import {CustomerAuthModule} from './customer-auth.module';
 
 describe('CustomerAuthModule', () => {
   let customerAuthModule: CustomerAuthModule;

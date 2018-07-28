@@ -1,17 +1,21 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AdminAuthLayoutComponent } from './admin-auth-layout/admin-auth-layout.component';
-import { AdminSignInPageComponent } from './admin-sign-in-page/admin-sign-in-page.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {AdminAuthLayoutComponent} from './admin-auth-layout/admin-auth-layout.component';
+import {AdminSignInPageComponent} from './admin-sign-in-page/admin-sign-in-page.component';
 
 const routes: Routes = [
   {
-    path: '', component: AdminAuthLayoutComponent,
+    path: '',
+    component: AdminAuthLayoutComponent,
     children: [
       {
-        path: '', pathMatch: 'full', redirectTo: 'sign-in'
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'sign-in'
       },
       {
-        path: 'sign-in', component: AdminSignInPageComponent
+        path: 'sign-in',
+        component: AdminSignInPageComponent
       }
     ]
   }
@@ -21,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminAuthRoutingModule { }
+export class AdminAuthRoutingModule {}

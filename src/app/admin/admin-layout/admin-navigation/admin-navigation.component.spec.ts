@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminNavigationComponent } from './admin-navigation.component';
+import {AdminNavigationComponent} from './admin-navigation.component';
 
 describe('AdminNavigationComponent', () => {
   let component: AdminNavigationComponent;
@@ -8,9 +8,8 @@ describe('AdminNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

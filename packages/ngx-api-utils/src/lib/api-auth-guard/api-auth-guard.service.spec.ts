@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { ApiAuthGuardService } from './api-auth-guard.service';
+import {ApiAuthGuardService} from './api-auth-guard.service';
 
 // TODO: Complete these unit tests and also provide integration tests in ngx-api-utils.spec.ts
 xdescribe('ApiAuthGuardService', () => {

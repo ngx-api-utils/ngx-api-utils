@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { ApiDefaultHeadersInterceptor } from './api-default-headers.interceptor';
+import {ApiDefaultHeadersInterceptor} from './api-default-headers.interceptor';
 
 describe('ApiDefaultHeadersInterceptor', () => {
   beforeEach(() => {

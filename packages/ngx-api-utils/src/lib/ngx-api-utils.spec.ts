@@ -1,17 +1,17 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload } from '../public_api';
-import { Polly } from '@pollyjs/core';
+import {TestBed, inject} from '@angular/core/testing';
+import {NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload} from '../public_api';
+import {Polly} from '@pollyjs/core';
 import * as XHRAdapter from '@pollyjs/adapter-xhr';
 import * as FetchAdapter from '@pollyjs/adapter-fetch';
-import { TokenDecoder, AUTH_TOKEN_NAME } from './auth-token/public_api';
-import { ApiErrorsInterceptor } from './api-http/interceptors/api-errors/api-errors.interceptor';
+import {TokenDecoder, AUTH_TOKEN_NAME} from './auth-token/public_api';
+import {ApiErrorsInterceptor} from './api-http/interceptors/api-errors/api-errors.interceptor';
 import {
   API_HTTP_INTERCEPTORS,
   API_HTTP_BASE_URL,
   API_HTTP_DEFAULT_HEADERS,
   API_HTTP_AUTHORIZATION_HEADER_NAME
 } from './api-http/public_api';
-import { HttpErrorResponse } from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 
 /*
   Register the adapters and persisters we want to use. This way all future
@@ -25,7 +25,7 @@ describe('ngx-api-utils package', () => {
     baseUrl: 'http://example.com/api',
     authTokenName: 'id_token',
     defaultHeaders: {
-      'accept': 'application/json, */*',
+      accept: 'application/json, */*',
       'X-Client': 'Ngx Api Utils Client'
     },
     authorizationHeaderName: 'Authorization'
@@ -34,9 +34,7 @@ describe('ngx-api-utils package', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxApiUtilsModule
-      ],
+      imports: [NgxApiUtilsModule],
       providers: [
         {
           provide: API_HTTP_BASE_URL,
@@ -114,9 +112,7 @@ describe('ngx-api-utils package', () => {
 
     it('should update the value of the token when changed and should be valid', () => {
       class FakeTokenPayload extends TokenPayload {
-        constructor(
-          public token: string
-        ) {
+        constructor(public token: string) {
           super();
         }
       }
@@ -128,45 +124,42 @@ describe('ngx-api-utils package', () => {
       }
 
       TestBed.overrideProvider(TokenDecoder, {
-        useValue:  new FakeTokenDecoder()
+        useValue: new FakeTokenDecoder()
       });
 
-      return inject(
-        [AuthTokenService],
-        (service: AuthTokenService<FakeTokenPayload>) => {
-          const subscriberSpy = jasmine.createSpy('subscriberSpy');
-          service.value$.subscribe((token) => subscriberSpy(token));
-          // no stored token yet
-          expect(subscriberSpy.calls.mostRecent().args[0]).toBeUndefined();
-          // fist token
-          const tokenValueFirst = 'fake token first';
-          service.value$.next(tokenValueFirst);
-          expect(service.value).toEqual(tokenValueFirst);
-          expect(service.payload).toBeTruthy();
-          expect(service.payload.token).toEqual(tokenValueFirst);
-          expect(service.isValid()).toBeTruthy();
-          expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueFirst);
-          expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueFirst);
-          // second token
-          const tokenValueSecond = 'fake token second';
-          service.value$.next(tokenValueSecond);
-          expect(service.value).toEqual(tokenValueSecond);
-          expect(service.payload).toBeTruthy();
-          expect(service.payload.token).toEqual(tokenValueSecond);
-          expect(service.isValid()).toBeTruthy();
-          expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueSecond);
-          expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueSecond);
-          // third token
-          const tokenValueThird = 'fake token third';
-          service.value$.next(tokenValueThird);
-          expect(service.value).toEqual(tokenValueThird);
-          expect(service.payload).toBeTruthy();
-          expect(service.payload.token).toEqual(tokenValueThird);
-          expect(service.isValid()).toBeTruthy();
-          expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueThird);
-          expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueThird);
-        }
-      )();
+      return inject([AuthTokenService], (service: AuthTokenService<FakeTokenPayload>) => {
+        const subscriberSpy = jasmine.createSpy('subscriberSpy');
+        service.value$.subscribe(token => subscriberSpy(token));
+        // no stored token yet
+        expect(subscriberSpy.calls.mostRecent().args[0]).toBeUndefined();
+        // fist token
+        const tokenValueFirst = 'fake token first';
+        service.value$.next(tokenValueFirst);
+        expect(service.value).toEqual(tokenValueFirst);
+        expect(service.payload).toBeTruthy();
+        expect(service.payload.token).toEqual(tokenValueFirst);
+        expect(service.isValid()).toBeTruthy();
+        expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueFirst);
+        expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueFirst);
+        // second token
+        const tokenValueSecond = 'fake token second';
+        service.value$.next(tokenValueSecond);
+        expect(service.value).toEqual(tokenValueSecond);
+        expect(service.payload).toBeTruthy();
+        expect(service.payload.token).toEqual(tokenValueSecond);
+        expect(service.isValid()).toBeTruthy();
+        expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueSecond);
+        expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueSecond);
+        // third token
+        const tokenValueThird = 'fake token third';
+        service.value$.next(tokenValueThird);
+        expect(service.value).toEqual(tokenValueThird);
+        expect(service.payload).toBeTruthy();
+        expect(service.payload.token).toEqual(tokenValueThird);
+        expect(service.isValid()).toBeTruthy();
+        expect(subscriberSpy.calls.mostRecent().args[0]).toEqual(tokenValueThird);
+        expect(localStorage.getItem(apiUtilsConfig.authTokenName)).toEqual(tokenValueThird);
+      })();
     });
   });
 
@@ -189,7 +182,7 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true});
         });
-        const {success} = (await service.get<{success: boolean}>(endpoint).toPromise());
+        const {success} = await service.get<{success: boolean}>(endpoint).toPromise();
         expect(success).toBeTruthy('response should be success');
       })();
     });
@@ -206,13 +199,13 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, receivedHeaders: req.headers});
         });
-        const {success, receivedHeaders} = (await service.get<{success: boolean, receivedHeaders: object}>(endpoint).toPromise());
+        const {success, receivedHeaders} = await service.get<{success: boolean; receivedHeaders: object}>(endpoint).toPromise();
         expect(success).toBeTruthy('response should be success');
         const normalizedReceivedHeaders = Object.keys(receivedHeaders).reduce((prev, headerName) => {
           (prev as any)[headerName.toLowerCase()] = (receivedHeaders as any)[headerName];
           return prev;
         }, {});
-        Object.keys(apiUtilsConfig.defaultHeaders).forEach((headerName) => {
+        Object.keys(apiUtilsConfig.defaultHeaders).forEach(headerName => {
           const headerValue = (apiUtilsConfig.defaultHeaders as any)[headerName];
           headerName = headerName.toLowerCase();
           expect((normalizedReceivedHeaders as any)[headerName]).toEqual(headerValue);
@@ -231,7 +224,7 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
-        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
+        const {success, authToken} = await service.get<{success: boolean; authToken: string}>(endpoint).toPromise();
         expect(success).toBeTruthy('response should be success');
         expect(authToken).toEqual(`Bearer ${fakeTokenValue}`);
       })();
@@ -248,12 +241,11 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
-        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
-          endpoint,
-          {
+        const {success, authToken} = await service
+          .get<{success: boolean; authToken: string}>(endpoint, {
             headers: service.headersWithNoAuthorization()
-          }
-        ).toPromise());
+          })
+          .toPromise();
         expect(success).toBeTruthy('response should be success');
         expect(authToken).toBeUndefined();
       })();
@@ -271,9 +263,11 @@ describe('ngx-api-utils package', () => {
         server.get(`${apiUtilsConfig.baseUrl}${endpoint}`).intercept((req: any, res: any) => {
           res.status(200).json({success: true, authToken: req.headers[apiUtilsConfig.authorizationHeaderName]});
         });
-        const {success, authToken} = (await service.get<{success: boolean, authToken: string}>(
-          endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}}
-        ).toPromise());
+        const {success, authToken} = await service
+          .get<{success: boolean; authToken: string}>(endpoint, {
+            headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}
+          })
+          .toPromise();
         expect(success).toBeTruthy('response should be success');
         expect(authToken).toEqual(`Bearer ${presetFakeTokenValue}`);
       })();
@@ -292,7 +286,7 @@ describe('ngx-api-utils package', () => {
         });
         let caught = false;
         try {
-          (await service.get<{success: boolean, authToken: string}>(endpoint).toPromise());
+          await service.get<{success: boolean; authToken: string}>(endpoint).toPromise();
         } catch {
           caught = true;
         }
@@ -305,7 +299,9 @@ describe('ngx-api-utils package', () => {
         providers: [
           ApiErrorsInterceptor,
           {
-            provide: API_HTTP_INTERCEPTORS, useExisting: ApiErrorsInterceptor, multi: true
+            provide: API_HTTP_INTERCEPTORS,
+            useExisting: ApiErrorsInterceptor,
+            multi: true
           }
         ]
       });
@@ -321,9 +317,9 @@ describe('ngx-api-utils package', () => {
           });
           let caught = false;
           try {
-            (await service.get<{success: boolean}>(
-              endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}}
-            ).toPromise());
+            await service
+              .get<{success: boolean}>(endpoint, {headers: {[apiUtilsConfig.authorizationHeaderName]: `Bearer ${presetFakeTokenValue}`}})
+              .toPromise();
           } catch {
             caught = true;
           }

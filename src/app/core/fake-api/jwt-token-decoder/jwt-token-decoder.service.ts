@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { TokenDecoder } from 'ngx-api-utils';
+import {Injectable} from '@angular/core';
+import {TokenDecoder} from 'ngx-api-utils';
 import * as jwt_decode from 'jwt-decode';
-import { JwtTokenPayload } from '../jwt-token-payload';
+import {JwtTokenPayload} from '../jwt-token-payload';
 
 @Injectable({
   providedIn: 'root'

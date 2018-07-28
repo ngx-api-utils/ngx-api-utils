@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export function localStorageFactory(): TokenStorage {
   return typeof localStorage !== 'undefined' ? localStorage : undefined;
@@ -12,7 +12,6 @@ export function localStorageFactory(): TokenStorage {
   providedIn: 'root',
   useFactory: localStorageFactory
 })
-
 export abstract class TokenStorage implements Partial<Storage> {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;

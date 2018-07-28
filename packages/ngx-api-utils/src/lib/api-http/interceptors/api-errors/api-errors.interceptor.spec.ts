@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { ApiErrorsInterceptor } from './api-errors.interceptor';
+import {ApiErrorsInterceptor} from './api-errors.interceptor';
 
 describe('ApiErrorsInterceptor', () => {
   beforeEach(() => {

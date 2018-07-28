@@ -1,4 +1,4 @@
-import { CustomerDashboardModule } from './customer-dashboard.module';
+import {CustomerDashboardModule} from './customer-dashboard.module';
 
 describe('CustomerDashboardModule', () => {
   let customerDashboardModule: CustomerDashboardModule;

@@ -1,10 +1,10 @@
-import { Injectable, OnDestroy, Optional, Inject } from '@angular/core';
-import { CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AuthTokenService } from '../auth-token/public_api';
-import { API_AUTH_GUARD_PUBLIC_ONLY_ROUTES } from './api-auth-guard-public-only-routes';
-import { API_AUTH_GUARD_URL_FOR_AUTHENTICATED } from './api-auth-guard-url-for-authenticated';
-import { API_AUTH_GUARD_URL_FOR_AUTHENTICATION } from './api-auth-guard-url-for-authentication';
+import {Injectable, OnDestroy, Optional, Inject} from '@angular/core';
+import {CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AuthTokenService} from '../auth-token/public_api';
+import {API_AUTH_GUARD_PUBLIC_ONLY_ROUTES} from './api-auth-guard-public-only-routes';
+import {API_AUTH_GUARD_URL_FOR_AUTHENTICATED} from './api-auth-guard-url-for-authenticated';
+import {API_AUTH_GUARD_URL_FOR_AUTHENTICATION} from './api-auth-guard-url-for-authentication';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,15 @@ export class ApiAuthGuardService implements CanActivate, CanActivateChild, OnDes
   constructor(
     protected authToken: AuthTokenService,
     protected router: Router,
-    @Optional() @Inject(API_AUTH_GUARD_URL_FOR_AUTHENTICATED) protected urlForAuthenticated?: string,
-    @Optional() @Inject(API_AUTH_GUARD_URL_FOR_AUTHENTICATION) protected urlForAuthentication?: string,
-    @Optional() @Inject(API_AUTH_GUARD_PUBLIC_ONLY_ROUTES) protected publicOnlyRoutes?: RegExp
+    @Optional()
+    @Inject(API_AUTH_GUARD_URL_FOR_AUTHENTICATED)
+    protected urlForAuthenticated?: string,
+    @Optional()
+    @Inject(API_AUTH_GUARD_URL_FOR_AUTHENTICATION)
+    protected urlForAuthentication?: string,
+    @Optional()
+    @Inject(API_AUTH_GUARD_PUBLIC_ONLY_ROUTES)
+    protected publicOnlyRoutes?: RegExp
   ) {
     this.urlForAuthenticated = this.urlForAuthenticated || '/';
     this.urlForAuthentication = this.urlForAuthentication || '/login';
@@ -34,10 +40,7 @@ export class ApiAuthGuardService implements CanActivate, CanActivateChild, OnDes
     }
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url = state.url;
     const tokenIsValid = this.authToken.isValid();
     // Check if the user is logged in and trying to get on e.g. /login in that case -> /dashboard
@@ -71,10 +74,7 @@ export class ApiAuthGuardService implements CanActivate, CanActivateChild, OnDes
 
   checkCurrentUrl() {
     if (this.router.navigated) {
-      this.canActivate(
-        this.router.routerState.root.snapshot,
-        this.router.routerState.snapshot
-      );
+      this.canActivate(this.router.routerState.root.snapshot, this.router.routerState.snapshot);
     }
   }
 

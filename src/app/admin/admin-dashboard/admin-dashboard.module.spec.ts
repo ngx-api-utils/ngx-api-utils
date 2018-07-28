@@ -1,4 +1,4 @@
-import { AdminDashboardModule } from './admin-dashboard.module';
+import {AdminDashboardModule} from './admin-dashboard.module';
 
 describe('AdminDashboardModule', () => {
   let adminDashboardModule: AdminDashboardModule;

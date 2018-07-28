@@ -1,15 +1,14 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AuthTokenService } from '../../../auth-token/public_api';
-import { API_HTTP_AUTHORIZATION_HEADER_NAME } from '../../api-http-authorization-header-name';
-import { API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX } from '../../api-http-authorization-header-token-type-prefix';
+import {Injectable, Inject} from '@angular/core';
+import {HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {AuthTokenService} from '../../../auth-token/public_api';
+import {API_HTTP_AUTHORIZATION_HEADER_NAME} from '../../api-http-authorization-header-name';
+import {API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX} from '../../api-http-authorization-header-token-type-prefix';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
-
   constructor(
     @Inject(API_HTTP_AUTHORIZATION_HEADER_NAME) public apiHttpAuthorizationHeaderName: string,
     @Inject(API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX) public apiHttpAuthorizationHeaderTokenTypePrefix: string,
@@ -29,9 +28,7 @@ export class ApiAuthorizationHeaderInterceptor implements HttpInterceptor {
    * and provide it using forwardRef or similar.
    * Yet this seems too complex for this stage.
    */
-  headersWithNoAuthorization(
-    headers?: HttpHeaders | string | {[name: string]: string | string[]}
-  ): HttpHeaders {
+  headersWithNoAuthorization(headers?: HttpHeaders | string | {[name: string]: string | string[]}): HttpHeaders {
     headers = headers instanceof HttpHeaders ? headers : new HttpHeaders(headers);
     return headers.set(this.apiHttpAuthorizationHeaderName, '');
   }

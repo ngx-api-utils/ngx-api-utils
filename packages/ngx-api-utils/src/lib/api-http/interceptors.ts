@@ -1,6 +1,6 @@
-import { HttpHandler, HttpInterceptor, HttpRequest, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { InjectionToken } from '@angular/core';
+import {HttpHandler, HttpInterceptor, HttpRequest, HttpEvent} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {InjectionToken} from '@angular/core';
 
 /**
  * `HttpHandler` which applies an `HttpInterceptor` to an `HttpRequest`.
@@ -23,8 +23,7 @@ export class HttpInterceptorHandler implements HttpHandler {
  */
 export const API_HTTP_INTERCEPTORS = new InjectionToken<HttpInterceptor[]>('API_HTTP_INTERCEPTORS');
 
-export const API_HTTP_INTERCEPTORS_INJECTION_TOKEN =
-  new InjectionToken<InjectionToken<HttpInterceptor[]>>(
-    'API_HTTP_INTERCEPTORS_INJECTION_TOKEN',
-    { providedIn: 'root', factory: () => API_HTTP_INTERCEPTORS }
-  );
+export const API_HTTP_INTERCEPTORS_INJECTION_TOKEN = new InjectionToken<InjectionToken<HttpInterceptor[]>>(
+  'API_HTTP_INTERCEPTORS_INJECTION_TOKEN',
+  {providedIn: 'root', factory: () => API_HTTP_INTERCEPTORS}
+);

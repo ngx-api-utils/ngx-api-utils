@@ -1,4 +1,4 @@
-import { PublicModule } from './public.module';
+import {PublicModule} from './public.module';
 
 describe('PublicModule', () => {
   let publicModule: PublicModule;

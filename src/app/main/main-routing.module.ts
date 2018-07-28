@@ -1,14 +1,16 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { MainLayoutComponent } from './main-layout/main-layout.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {NotFoundPageComponent} from './not-found-page/not-found-page.component';
+import {MainLayoutComponent} from './main-layout/main-layout.component';
 
 const routes: Routes = [
   {
-    path: '', component: MainLayoutComponent,
+    path: '',
+    component: MainLayoutComponent,
     children: [
       {
-        path: '**', component: NotFoundPageComponent
+        path: '**',
+        component: NotFoundPageComponent
       }
     ]
   }
@@ -18,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {}

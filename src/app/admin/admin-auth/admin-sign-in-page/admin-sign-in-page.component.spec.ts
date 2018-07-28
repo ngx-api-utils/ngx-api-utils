@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminSignInPageComponent } from './admin-sign-in-page.component';
+import {AdminSignInPageComponent} from './admin-sign-in-page.component';
 
 describe('AdminSignInPageComponent', () => {
   let component: AdminSignInPageComponent;
@@ -8,9 +8,8 @@ describe('AdminSignInPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminSignInPageComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminSignInPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

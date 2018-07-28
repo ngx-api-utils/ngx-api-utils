@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CustomerLayoutComponent } from './customer-layout/customer-layout.component';
-import { ApiAuthGuardService } from 'ngx-api-utils';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {CustomerLayoutComponent} from './customer-layout/customer-layout.component';
+import {ApiAuthGuardService} from 'ngx-api-utils';
 
 const routes: Routes = [
   {
@@ -17,10 +17,13 @@ const routes: Routes = [
     canActivateChild: [ApiAuthGuardService],
     children: [
       {
-        path: '', pathMatch: 'full', redirectTo: 'dashboard'
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard'
       },
       {
-        path: 'dashboard', loadChildren: './customer-dashboard/customer-dashboard.module#CustomerDashboardModule'
+        path: 'dashboard',
+        loadChildren: './customer-dashboard/customer-dashboard.module#CustomerDashboardModule'
       }
     ]
   }
@@ -30,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CustomerRoutingModule { }
+export class CustomerRoutingModule {}

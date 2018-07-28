@@ -1,4 +1,4 @@
-import { MainModule } from './main.module';
+import {MainModule} from './main.module';
 
 describe('MainModule', () => {
   let mainModule: MainModule;

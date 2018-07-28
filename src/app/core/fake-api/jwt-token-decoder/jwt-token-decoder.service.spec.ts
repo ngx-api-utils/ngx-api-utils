@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { JwtTokenDecoderService } from './jwt-token-decoder.service';
+import {JwtTokenDecoderService} from './jwt-token-decoder.service';
 
 describe('JwtTokenDecoderService', () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PricingPageComponent } from './pricing-page.component';
+import {PricingPageComponent} from './pricing-page.component';
 
 describe('PricingPageComponent', () => {
   let component: PricingPageComponent;
@@ -8,9 +8,8 @@ describe('PricingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PricingPageComponent ]
-    })
-    .compileComponents();
+      declarations: [PricingPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

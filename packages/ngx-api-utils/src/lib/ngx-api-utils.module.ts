@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 import {
   API_HTTP_INTERCEPTORS,
   ApiBaseUrlInterceptor,
@@ -8,20 +8,24 @@ import {
 } from './api-http/public_api';
 
 @NgModule({
-  imports: [
-    HttpClientModule
-  ],
+  imports: [HttpClientModule],
   declarations: [],
   exports: [],
   providers: [
     {
-      provide: API_HTTP_INTERCEPTORS, useExisting: ApiBaseUrlInterceptor, multi: true
+      provide: API_HTTP_INTERCEPTORS,
+      useExisting: ApiBaseUrlInterceptor,
+      multi: true
     },
     {
-      provide: API_HTTP_INTERCEPTORS, useExisting: ApiDefaultHeadersInterceptor, multi: true
+      provide: API_HTTP_INTERCEPTORS,
+      useExisting: ApiDefaultHeadersInterceptor,
+      multi: true
     },
     {
-      provide: API_HTTP_INTERCEPTORS, useExisting: ApiAuthorizationHeaderInterceptor, multi: true
+      provide: API_HTTP_INTERCEPTORS,
+      useExisting: ApiAuthorizationHeaderInterceptor,
+      multi: true
     }
   ]
 })

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PublicNavigationComponent } from './public-navigation.component';
+import {PublicNavigationComponent} from './public-navigation.component';
 
 describe('PublicNavigationComponent', () => {
   let component: PublicNavigationComponent;
@@ -8,9 +8,8 @@ describe('PublicNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PublicNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [PublicNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

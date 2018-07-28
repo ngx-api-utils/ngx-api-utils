@@ -1,12 +1,12 @@
-import { TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
+import {TestBed, inject, tick, fakeAsync} from '@angular/core/testing';
 // TODO: Make sure to remove `rxjs-compat` when this https://github.com/angular/zone.js/issues/1091 is resolved
 import 'zone.js/dist/zone-patch-rxjs-fake-async';
 
-import { AuthTokenService } from './auth-token.service';
-import { TokenPayload } from './token-payload/token-payload';
-import { TokenStorage } from './token-storage/token-storage';
-import { TokenDecoder } from './token-decoder/token-decoder';
-import { AUTH_TOKEN_AUTO_REMOVE } from './auth-token-auto-remove';
+import {AuthTokenService} from './auth-token.service';
+import {TokenPayload} from './token-payload/token-payload';
+import {TokenStorage} from './token-storage/token-storage';
+import {TokenDecoder} from './token-decoder/token-decoder';
+import {AUTH_TOKEN_AUTO_REMOVE} from './auth-token-auto-remove';
 
 describe('AuthTokenService', () => {
   let tokenStored: string;
@@ -15,14 +15,7 @@ describe('AuthTokenService', () => {
   let tokenDecoder: jasmine.SpyObj<TokenDecoder<TokenPayload>>;
   beforeEach(() => {
     tokenStored = undefined;
-    tokenStorage = jasmine.createSpyObj(
-      'tokenStorage',
-      [
-        'getItem',
-        'setItem',
-        'removeItem'
-      ]
-    );
+    tokenStorage = jasmine.createSpyObj('tokenStorage', ['getItem', 'setItem', 'removeItem']);
     tokenStorage.getItem.and.callFake(() => {
       return tokenStored;
     });
@@ -38,13 +31,8 @@ describe('AuthTokenService', () => {
       get expires() {
         return Date.now() + 3600000;
       }
-    };
-    tokenDecoder = jasmine.createSpyObj(
-      'tokenDecoder',
-      [
-        'decode'
-      ]
-    );
+    }();
+    tokenDecoder = jasmine.createSpyObj('tokenDecoder', ['decode']);
     tokenDecoder.decode.and.callFake((token: string) => {
       return tokenPayload;
     });
@@ -93,14 +81,8 @@ describe('AuthTokenService', () => {
   describe('when a token changes in sequence', () => {
     it('should notify and store the value', inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
       const subscriberSpy = jasmine.createSpy('subscriberSpy');
-      service.value$.subscribe((token) => subscriberSpy(token));
-      const tokenRawSequence = [
-        '1',
-        '2',
-        undefined,
-        '4',
-        undefined
-      ];
+      service.value$.subscribe(token => subscriberSpy(token));
+      const tokenRawSequence = ['1', '2', undefined, '4', undefined];
 
       expect(service.value).toBeUndefined();
       expect(service.payload).toBeUndefined();
@@ -176,15 +158,18 @@ describe('AuthTokenService', () => {
       expect(service.payload).toBeTruthy();
       expect(service.isValid()).toBeTruthy();
     }));
-    it('should be auto removed if configured so', fakeAsync(() => {
-      TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
-      return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-        tick(expiresAfter + 1);
-        expect(service.value).toBeFalsy();
-        expect(service.payload).toBeUndefined();
-        expect(service.isValid()).toBeFalsy();
-      })();
-    }));
+    it(
+      'should be auto removed if configured so',
+      fakeAsync(() => {
+        TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
+        return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+          tick(expiresAfter + 1);
+          expect(service.value).toBeFalsy();
+          expect(service.payload).toBeUndefined();
+          expect(service.isValid()).toBeFalsy();
+        })();
+      })
+    );
   });
 
   describe('when a token is not valid', () => {

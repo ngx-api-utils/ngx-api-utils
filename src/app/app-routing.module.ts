@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
   {
     path: 'login',
-    redirectTo: 'customer/auth/sign-in',
-
+    redirectTo: 'customer/auth/sign-in'
   },
   {
     path: 'admin-login',
-    redirectTo: 'admin/auth/sign-in',
+    redirectTo: 'admin/auth/sign-in'
   },
   {
     path: 'customer',
@@ -33,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {enableTracing: false})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

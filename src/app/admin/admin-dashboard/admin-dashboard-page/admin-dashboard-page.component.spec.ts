@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminDashboardPageComponent } from './admin-dashboard-page.component';
+import {AdminDashboardPageComponent} from './admin-dashboard-page.component';
 
 describe('AdminDashboardPageComponent', () => {
   let component: AdminDashboardPageComponent;
@@ -8,9 +8,8 @@ describe('AdminDashboardPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminDashboardPageComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminDashboardPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
