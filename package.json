@@ -35,9 +35,11 @@
     "ngx-api-utils:publish": "cd dist/ngx-api-utils && npm publish",
     "ngx-api-utils:git-tag": "npm-run-all \"git -- commit -a -m 'release(ngx-api-utils): {1}'\" \"git -- tag {1}\" \"git -- push --no-verify origin {1}\" --",
     "ngx-api-utils:release": "npm-run-all ngx-api-utils:lint \"ngx-api-utils:test -- --watch false\" \"ngx-api-utils:version -- {1}\" ngx-api-utils:build ngx-api-utils:docs \"ngx-api-utils:publish -- {2} {3}\" \"ngx-api-utils:git-tag -- {1}\" --",
-    "format:fix": "pretty-quick",
-    "format:fix-staged": "pretty-quick --staged",
-    "ci:hooks:pre-commit": "npm-run-all format:fix-staged",
+    "prettier": "prettier",
+    "format:prettier:lint-all": "prettier -l '**/*.{ts*,js*}'",
+    "format:prettier:fix-all-DANGEROUSLY": "npm-run-all \"format:prettier:lint-all -- --write\"",
+    "format:prettier:fix-staged": "pretty-quick --staged",
+    "ci:hooks:pre-commit": "npm-run-all format:prettier:fix-staged",
     "ci:hooks:pre-push": "npm-run-all lint",
     "git": "git"
   },
@@ -98,6 +100,7 @@
     "tsickle": ">=0.32.0",
     "tslib": "^1.7.1",
     "tslint": "~5.11.0",
+    "tslint-plugin-prettier": "^1.3.0",
     "typescript": "~2.7.2"
   }
 }

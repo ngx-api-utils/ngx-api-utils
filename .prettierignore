@@ -1,0 +1,9 @@
+.git/
+dist/
+node_modules/
+angular.json
+package*.json
+tsconfig.json
+tslint.json
+**/tsconfig*.json
+**/tslint*.json
