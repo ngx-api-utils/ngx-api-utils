@@ -35,7 +35,6 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
   protected authTokenName = 'id_token';
   protected _tokenPayload: undefined | Readonly<T> = undefined;
   protected autoRemoveTokenSubscription: Subscription;
-  protected clearTokenWhenNotValidSubscription: Subscription;
 
   constructor(
     protected storage: TokenStorage,
