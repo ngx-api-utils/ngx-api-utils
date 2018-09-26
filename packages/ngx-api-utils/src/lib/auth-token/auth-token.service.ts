@@ -97,16 +97,14 @@ export class AuthTokenService<T extends TokenPayload = TokenPayload> implements 
           const isValid = this.isValid();
           if (!isValid) {
             return of({
-              reason: '_token_not_valid_',
-              isValid
+              reason: '_token_not_valid_'
             });
           }
           return of(this.payload).pipe(
             switchMap(payload => this.whenTokenExpires(payload)),
             map(expires => {
               return {
-                reason: '_token_expired_',
-                expires
+                reason: '_token_expired_'
               };
             })
           );
