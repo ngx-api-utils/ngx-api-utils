@@ -2,9 +2,10 @@
 
 # ngx-api-utils
 
-Quickly integrate any HTTP API (REST, Ajax, and any other) with [Angular](https://angular.io/) using this not strongly opinionated library of utilities and helpers.
+ngx-api-utils is a lean library of utilities and helpers to quickly integrate any HTTP API (REST, Ajax, and any other) with [Angular](https://angular.io/).
 
 Inspired by:
+
 - https://github.com/auth0/angular2-jwt
 - https://angular.io/guide/http#intercepting-requests-and-responses.
 
@@ -59,7 +60,7 @@ For more details, please check:
 
 ## Demo
 
-This repository contains a [Demo app](https://github.com/ngx-api-utils/ngx-api-utils/tree/master/src) (TBD) that is intended to show a bit more complex app and how the `ngx-api-utils` package fits in. 
+This repository contains a [Demo app](https://github.com/ngx-api-utils/ngx-api-utils/tree/master/src) (TBD) that is intended to show a bit more complex app and how the `ngx-api-utils` package fits in.
 
 In the demo beside the usage of `ngx-api-utils` I would strongly recommend checking:
 
@@ -74,7 +75,7 @@ The project uses the following things, you should get familiar with:
 - [@angular/cli's capabilities of creating and maintaining libraries](https://github.com/angular/angular-cli/wiki/stories-create-library)
 - local fork of this repository https://github.com/techiediaries/fake-api-jwt-json-server based on this wonderful article https://www.techiediaries.com/fake-api-jwt-json-server/ and utilizing this awesome https://github.com/typicode/json-server
 - custom set of scripts that you can check https://github.com/ngx-api-utils/ngx-api-utils/blob/master/package.json#scripts that allows you to:
-  - start the Demo app with `npm run start` 
+  - start the Demo app with `npm run start`
   - run the whole set of linters `npm run start`
   - run the e2e tests of the Demo app `npm run e2e` (TBD)
   - build the `ngx-api-utils` package itself through `npm run ngx-api-utils:build`
