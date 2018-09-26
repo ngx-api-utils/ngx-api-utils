@@ -158,18 +158,15 @@ describe('AuthTokenService', () => {
       expect(service.payload).toBeTruthy();
       expect(service.isValid()).toBeTruthy();
     }));
-    it(
-      'should be auto removed if configured so',
-      fakeAsync(() => {
-        TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
-        return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
-          tick(expiresAfter + 1);
-          expect(service.value).toBeFalsy();
-          expect(service.payload).toBeUndefined();
-          expect(service.isValid()).toBeFalsy();
-        })();
-      })
-    );
+    it('should be auto removed if configured so', fakeAsync(() => {
+      TestBed.overrideProvider(AUTH_TOKEN_AUTO_REMOVE, {useValue: true});
+      return inject([AuthTokenService], (service: AuthTokenService<TokenPayload>) => {
+        tick(expiresAfter + 1);
+        expect(service.value).toBeFalsy();
+        expect(service.payload).toBeUndefined();
+        expect(service.isValid()).toBeFalsy();
+      })();
+    }));
   });
 
   describe('when a token is not valid', () => {
