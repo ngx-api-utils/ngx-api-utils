@@ -18,8 +18,8 @@ describe('JwtTokenDecoderService', () => {
     const sampleString2 =
       '0iOjAuMTEzNzY2NjAzNDkwODc5MDgsImlhdCI6MTU1MjkwNzc5NiwiZXhwIjoxNTUyOTExMzk2fQ.-IlshCPYEj5CpQmoxlmN9M5IRtXwAWxcllxei54K8TU';
     const sampleString = sampleString1 + sampleString2;
-    let actual = JSON.stringify(service.decode(sampleString));
-    let expected = '{"email":"bruno@email.com","mathRandom":0.11376660349087908,"iat":1552907796,"exp":1552911396}';
+    const actual = JSON.stringify(service.decode(sampleString));
+    const expected = '{"email":"bruno@email.com","mathRandom":0.11376660349087908,"iat":1552907796,"exp":1552911396}';
     expect(actual).toEqual(expected);
   }));
 });
