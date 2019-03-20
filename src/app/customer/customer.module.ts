@@ -1,14 +1,15 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import {CustomerRoutingModule} from './customer-routing.module';
-import {CustomerLayoutComponent} from './customer-layout/customer-layout.component';
-import {CustomerHeaderComponent} from './customer-layout/customer-header/customer-header.component';
-import {CustomerFooterComponent} from './customer-layout/customer-footer/customer-footer.component';
-import {CustomerNavigationComponent} from './customer-layout/customer-navigation/customer-navigation.component';
+import {CustomerHomeComponent} from './customer-home/customer-home.component';
+import {CustomerLoginComponent} from './customer-login/customer-login.component';
+import {CustomerNoPermissionComponent} from './customer-no-permission/customer-no-permission.component';
+import {CustomerInsideComponent} from './customer-inside/customer-inside.component';
 
 @NgModule({
-  imports: [CommonModule, CustomerRoutingModule],
-  declarations: [CustomerLayoutComponent, CustomerHeaderComponent, CustomerFooterComponent, CustomerNavigationComponent]
+  imports: [CommonModule, CustomerRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [CustomerHomeComponent, CustomerLoginComponent, CustomerNoPermissionComponent, CustomerInsideComponent]
 })
 export class CustomerModule {}

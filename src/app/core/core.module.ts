@@ -45,7 +45,7 @@ export class CoreModule {
         },
         {
           provide: API_AUTH_GUARD_URL_FOR_AUTHENTICATION,
-          useValue: '/customer/'
+          useValue: '/customer/no-permission'
         },
         {
           provide: TokenDecoder,

@@ -21,4 +21,11 @@ describe('MainLayoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render title in a h1 tag', async(() => {
+    const fixture = TestBed.createComponent(MainLayoutComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome!');
+  }));
 });

@@ -3,14 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'login',
-    redirectTo: 'customer/auth/sign-in'
-  },
-  {
-    path: 'admin-login',
-    redirectTo: 'admin/auth/sign-in'
-  },
-  {
     path: 'customer',
     loadChildren: './customer/customer.module#CustomerModule'
   },
@@ -19,8 +11,8 @@ const routes: Routes = [
     loadChildren: './admin/admin.module#AdminModule'
   },
   {
-    path: '',
-    loadChildren: './public/public.module#PublicModule'
+    path: 'home',
+    redirectTo: '/'
   },
   {
     path: '',

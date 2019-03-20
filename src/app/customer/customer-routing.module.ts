@@ -1,31 +1,36 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {CustomerLayoutComponent} from './customer-layout/customer-layout.component';
+import {CustomerHomeComponent} from './customer-home/customer-home.component';
+import {CustomerLoginComponent} from './customer-login/customer-login.component';
+import {CustomerNoPermissionComponent} from './customer-no-permission/customer-no-permission.component';
+import {CustomerInsideComponent} from './customer-inside/customer-inside.component';
 import {ApiAuthGuardService} from 'ngx-api-utils';
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: './customer-auth/customer-auth.module#CustomerAuthModule',
-    canActivate: [ApiAuthGuardService],
-    canActivateChild: [ApiAuthGuardService]
+    path: 'login',
+    component: CustomerLoginComponent
   },
   {
-    path: '',
-    component: CustomerLayoutComponent,
+    path: 'home',
     canActivate: [ApiAuthGuardService],
     canActivateChild: [ApiAuthGuardService],
     children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        component: CustomerHomeComponent
       },
       {
-        path: 'dashboard',
-        loadChildren: './customer-dashboard/customer-dashboard.module#CustomerDashboardModule'
+        path: 'inside',
+        pathMatch: 'full',
+        component: CustomerInsideComponent
       }
     ]
+  },
+  {
+    path: 'no-permission',
+    component: CustomerNoPermissionComponent
   }
 ];
 
