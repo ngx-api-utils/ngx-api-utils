@@ -1,8 +1,7 @@
-import {ComponentFixture} from '@angular/core/testing';
 import {JwtTokenPayload} from './jwt-token-payload';
 
 describe('JwtTokenPayload', () => {
-  var payload: Partial<JwtTokenPayload>;
+  let payload: Partial<JwtTokenPayload>;
 
   it('should create an instance', () => {
     payload = {
@@ -11,7 +10,7 @@ describe('JwtTokenPayload', () => {
       iat: 1552907796,
       mathRandom: 0.11376660349087908
     };
-    var result = new JwtTokenPayload(payload);
+    const result = new JwtTokenPayload(payload);
     expect(result).toBeTruthy();
   });
 });

@@ -25,16 +25,16 @@ describe('AppNavigationComponent', () => {
   });
 
   it('should logout correctly', () => {
-    var result;
+    let result;
     component.logout();
     component.logged$.pipe(map(a => (result = a))).subscribe();
     expect(result).toBeFalsy();
   });
 
   it('navbar toggler should toggle correctly', () => {
-    var toggle = component.navbarOpen;
+    const toggle = component.navbarOpen;
     component.toggleNavbar();
-    var untoggle = component.navbarOpen;
+    const untoggle = component.navbarOpen;
     expect(toggle).toBeFalsy();
     expect(untoggle).toBeTruthy();
   });

@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
 })
 export class AppNavigationComponent implements OnInit {
   constructor(private authToken: AuthTokenService) {}
-  navbarOpen: boolean = false;
+  navbarOpen = false;
   logged$: Observable<boolean>;
 
   ngOnInit() {
