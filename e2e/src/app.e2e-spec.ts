@@ -1,7 +1,7 @@
 import {browser, element, by, ElementFinder} from 'protractor';
 
 describe('NgxApiUtils tests', () => {
-  //fake-api server must be started
+  // fake-api server must be started
 
   beforeAll(() => browser.get(''));
 
@@ -65,13 +65,13 @@ describe('NgxApiUtils tests', () => {
   });
 
   function checkHeading(hLevel: number, expectedText: string): void {
-    let hTag = `h${hLevel}`;
-    let hText = element(by.css(hTag)).getText();
+    const hTag = `h${hLevel}`;
+    const hText = element(by.css(hTag)).getText();
     expect(hText).toEqual(expectedText, hTag);
   }
 
   function checkNavigation(expectedNav: string[]): void {
-    let actual = element.all(by.css('nav a')).map((x: ElementFinder) => x.getAttribute('textContent'));
+    const actual = element.all(by.css('nav a')).map((x: ElementFinder) => x.getAttribute('textContent'));
     expect(actual).toEqual(expectedNav);
   }
 
@@ -90,17 +90,17 @@ describe('NgxApiUtils tests', () => {
     browser.waitForAngular();
     browser.sleep(500);
     checkHeading(1, expectedHeading);
-    let route = await browser.getCurrentUrl();
-    let actualRoute = route.split(/[0-9]\/{1}/)[1];
+    const route = await browser.getCurrentUrl();
+    const actualRoute = route.split(/[0-9]\/{1}/)[1];
     expect(actualRoute).toEqual(expectedRoute);
     browser.get('');
   }
 
   async function logOut() {
     await tryToLogin(validUser, 'Hello, customer!', 'customer/home');
-    let navigationButton = element(by.css('.navbar-toggler'));
+    const navigationButton = element(by.css('.navbar-toggler'));
 
-    //Check if the button is clickable. It depends of the screensize.
+    // Check if the button is clickable. It depends of the screensize.
     await navigationButton.click().then(() => {}, () => {});
     await element(by.linkText('Log out')).click();
     browser.get('');
