@@ -17,8 +17,7 @@ export class HelperFunctions {
     element(by.css('input[formControlName=email]')).sendKeys(user.email);
     element(by.css('input[formControlName=password]')).sendKeys(user.password);
     element(by.buttonText('Sign in')).click();
-    browser.ignoreSynchronization = true;
-    browser.waitForAngular();
+    browser.waitForAngularEnabled(false);
     this.checkHeading(expectedHeading);
     const route = await browser.getCurrentUrl();
     const actualRoute = route.split(/[0-9]\/{1}/)[1];

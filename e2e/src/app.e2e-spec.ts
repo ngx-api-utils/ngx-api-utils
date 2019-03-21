@@ -2,11 +2,11 @@ import {browser} from 'protractor';
 import {HelperFunctions} from './helperFunctions';
 
 describe('NgxApiUtils tests', () => {
-  let helperFunctions = new HelperFunctions();
   // fake-api server must be started
 
   beforeAll(() => browser.get(''));
 
+  const helperFunctions = new HelperFunctions();
   const expectedH1 = 'Welcome!';
   const expectedTitle = 'NgxApiUtils';
   const expectedNavigationWhenLogged = ['Home', 'Customer section', 'Admin section', 'Log out'];
