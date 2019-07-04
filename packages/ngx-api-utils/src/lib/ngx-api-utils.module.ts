@@ -5,7 +5,7 @@ import {
   ApiBaseUrlInterceptor,
   ApiDefaultHeadersInterceptor,
   ApiAuthorizationHeaderInterceptor
-} from './api-http/public_api';
+} from './api-http/public-api';
 
 @NgModule({
   imports: [HttpClientModule],

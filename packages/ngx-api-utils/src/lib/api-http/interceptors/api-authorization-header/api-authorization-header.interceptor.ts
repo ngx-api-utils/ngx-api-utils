@@ -1,7 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthTokenService} from '../../../auth-token/public_api';
+import {AuthTokenService} from '../../../auth-token/public-api';
 import {API_HTTP_AUTHORIZATION_HEADER_NAME} from '../../api-http-authorization-header-name';
 import {API_HTTP_AUTHORIZATION_HEADER_TOKEN_TYPE_PREFIX} from '../../api-http-authorization-header-token-type-prefix';
 

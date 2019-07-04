@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy, Optional, Inject} from '@angular/core';
 import {CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {AuthTokenService} from '../auth-token/public_api';
+import {AuthTokenService} from '../auth-token/public-api';
 import {API_AUTH_GUARD_PUBLIC_ONLY_ROUTES} from './api-auth-guard-public-only-routes';
 import {API_AUTH_GUARD_URL_FOR_AUTHENTICATED} from './api-auth-guard-url-for-authenticated';
 import {API_AUTH_GUARD_URL_FOR_AUTHENTICATION} from './api-auth-guard-url-for-authentication';

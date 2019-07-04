@@ -2,7 +2,7 @@ import {TestBed, inject} from '@angular/core/testing';
 
 import {ApiAuthorizationHeaderInterceptor} from './api-authorization-header.interceptor';
 import {API_HTTP_AUTHORIZATION_HEADER_NAME} from '../../api-http-authorization-header-name';
-import {AuthTokenService} from '../../../auth-token/public_api';
+import {AuthTokenService} from '../../../auth-token/public-api';
 
 describe('ApiAuthorizationHeaderInterceptor', () => {
   beforeEach(() => {

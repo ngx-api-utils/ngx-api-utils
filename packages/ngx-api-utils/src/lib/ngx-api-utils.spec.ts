@@ -1,16 +1,16 @@
 import {TestBed, inject} from '@angular/core/testing';
-import {NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload} from '../public_api';
+import {NgxApiUtilsModule, AuthTokenService, ApiHttpService, TokenPayload} from '../public-api';
 import {Polly} from '@pollyjs/core';
 import * as XHRAdapter from '@pollyjs/adapter-xhr';
 import * as FetchAdapter from '@pollyjs/adapter-fetch';
-import {TokenDecoder, AUTH_TOKEN_NAME} from './auth-token/public_api';
+import {TokenDecoder, AUTH_TOKEN_NAME} from './auth-token/public-api';
 import {ApiErrorsInterceptor} from './api-http/interceptors/api-errors/api-errors.interceptor';
 import {
   API_HTTP_INTERCEPTORS,
   API_HTTP_BASE_URL,
   API_HTTP_DEFAULT_HEADERS,
   API_HTTP_AUTHORIZATION_HEADER_NAME
-} from './api-http/public_api';
+} from './api-http/public-api';
 import {HttpErrorResponse} from '@angular/common/http';
 
 /*
