@@ -25,13 +25,13 @@ describe('AuthTokenService', () => {
     tokenStorage.removeItem.and.callFake(() => {
       tokenStored = undefined;
     });
-    tokenPayload = new class extends TokenPayload {
+    tokenPayload = new (class extends TokenPayload {
       amr = 'Admin';
       iat = Date.now();
       get expires() {
         return Date.now() + 3600000;
       }
-    }();
+    })();
     tokenDecoder = jasmine.createSpyObj('tokenDecoder', ['decode']);
     tokenDecoder.decode.and.callFake((token: string) => {
       return tokenPayload;
