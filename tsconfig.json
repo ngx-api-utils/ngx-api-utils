@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-api-utils": [
+        "dist/ngx-api-utils"
+      ],
+      "ngx-api-utils-new/*": [
+        "dist/ngx-api-utils/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

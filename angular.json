@@ -127,9 +127,9 @@
       }
     },
     "ngx-api-utils": {
+      "projectType": "library",
       "root": "packages/ngx-api-utils",
       "sourceRoot": "packages/ngx-api-utils/src",
-      "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
@@ -137,11 +137,6 @@
           "options": {
             "tsConfig": "packages/ngx-api-utils/tsconfig.lib.json",
             "project": "packages/ngx-api-utils/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "packages/ngx-api-utils/ng-package.prod.json"
-            }
           }
         },
         "test": {
