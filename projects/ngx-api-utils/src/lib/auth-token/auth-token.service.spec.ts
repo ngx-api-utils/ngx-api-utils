@@ -1,6 +1,4 @@
 import {TestBed, inject, tick, fakeAsync} from '@angular/core/testing';
-// TODO: Make sure to remove `rxjs-compat` when this https://github.com/angular/zone.js/issues/1091 is resolved
-import 'zone.js/dist/zone-patch-rxjs-fake-async';
 
 import {AuthTokenService} from './auth-token.service';
 import {TokenPayload} from './token-payload/token-payload';
