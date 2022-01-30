@@ -6,7 +6,7 @@ import {ApiAuthGuardService} from 'ngx-api-utils';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: './customer-auth/customer-auth.module#CustomerAuthModule',
+    loadChildren: () => import('./customer-auth/customer-auth.module').then((m) => m.CustomerAuthModule),
     canActivate: [ApiAuthGuardService],
     canActivateChild: [ApiAuthGuardService]
   },
@@ -23,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: './customer-dashboard/customer-dashboard.module#CustomerDashboardModule'
+        loadChildren: () => import('./customer-dashboard/customer-dashboard.module').then((m) => m.CustomerDashboardModule)
       }
     ]
   }

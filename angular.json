@@ -22,7 +22,6 @@
             "main": "projects/ngx-api-utils-demo/src/main.ts",
             "polyfills": "projects/ngx-api-utils-demo/src/polyfills.ts",
             "tsConfig": "projects/ngx-api-utils-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/ngx-api-utils-demo/src/favicon.ico",
               "projects/ngx-api-utils-demo/src/assets"
@@ -33,7 +32,13 @@
             "stylePreprocessorOptions": {
               "includePaths": ["./projects/ngx-api-utils-demo"]
             },
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -63,7 +68,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

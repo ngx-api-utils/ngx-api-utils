@@ -5,7 +5,7 @@ import {AdminLayoutComponent} from './admin-layout/admin-layout.component';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: './admin-auth/admin-auth.module#AdminAuthModule'
+    loadChildren: () => import('./admin-auth/admin-auth.module').then((m) => m.AdminAuthModule)
   },
   {
     path: '',
@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: './admin-dashboard/admin-dashboard.module#AdminDashboardModule'
+        loadChildren: () => import('./admin-dashboard/admin-dashboard.module').then((m) => m.AdminDashboardModule)
       }
     ]
   }
