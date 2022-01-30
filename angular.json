@@ -30,7 +30,9 @@
               "projects/ngx-api-utils-demo/src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["./projects/ngx-api-utils-demo"]
+              "includePaths": [
+                "./projects/ngx-api-utils-demo"
+              ]
             },
             "scripts": [],
             "vendorChunk": true,
@@ -106,15 +108,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-api-utils-demo/tsconfig.app.json",
-              "projects/ngx-api-utils-demo/tsconfig.spec.json",
-              "projects/ngx-api-utils-demo/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-api-utils-demo/**/*.ts",
+              "projects/ngx-api-utils-demo/**/*.html"
             ]
           }
         },
@@ -159,14 +157,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-api-utils/tsconfig.lib.json",
-              "projects/ngx-api-utils/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-api-utils/**/*.ts",
+              "projects/ngx-api-utils/**/*.html"
             ]
           }
         }
@@ -175,7 +170,8 @@
   },
   "cli": {
     "analytics": false,
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "defaultProject": "ngx-api-utils-demo"
 }
